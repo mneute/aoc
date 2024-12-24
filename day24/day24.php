@@ -30,13 +30,16 @@ while (($line = fgets($file)) !== false) {
 
 $z = array_filter($logicGates, static fn (string $key): bool => str_starts_with($key, 'z'), ARRAY_FILTER_USE_KEY);
 krsort($z);
-$z = array_map(evalLogicGate(...), array_keys($z), $z);
+$pt1 = array_map(evalLogicGate(...), array_keys($z), $z);
 
-printf('Part 1 : %s'.PHP_EOL, bindec(implode('', $z)));
+printf('Part 1 : %s'.PHP_EOL, bindec(implode('', $pt1)));
 
 printf('Execution time : %s seconds'.PHP_EOL, round(microtime(true) - $startTime, 4));
 printf('  Memory usage : %s Mib'.str_repeat(PHP_EOL, 2), round(memory_get_peak_usage() / (2 ** 20), 4));
 
+/**
+ * @return int<0,1>
+ */
 function evalLogicGate(string $wire, string $input): int
 {
     global $knownStates, $logicGates;

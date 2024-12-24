@@ -4,12 +4,41 @@ declare(strict_types=1);
 
 require_once 'Direction.php';
 
+$startTime = microtime(true);
+memory_reset_peak_usage();
+
 $map = [];
 $direction = Direction::UP;
 $coordinates = [0, 0];
 $lastThreeObstacles = [];
 $isInbounds = true;
 $possibleInfiniteLoops = 0;
+
+parseFile();
+
+while ($isInbounds) {
+    if (canMoveForward()) {
+        moveForward();
+    } else {
+        $direction = $direction->next();
+
+        if (canCreateInfiniteLoop()) {
+            ++$possibleInfiniteLoops;
+        }
+    }
+}
+printMap();
+$somme = array_reduce(
+    $map,
+    static fn (int $carry, array $line): int => $carry + count(array_filter($line, static fn (string $char) => 'X' === $char)),
+    0
+);
+
+printf('                     Somme : %d'.PHP_EOL, $somme);
+printf('Boucles infinies possibles : %d'.PHP_EOL, $possibleInfiniteLoops);
+
+printf('Execution time : %s seconds'.PHP_EOL, round(microtime(true) - $startTime, 4));
+printf('  Memory usage : %s Mib'.PHP_EOL.PHP_EOL, round(memory_get_peak_usage() / (2 ** 20), 4));
 
 function parseFile(): void
 {
@@ -70,7 +99,7 @@ function canMoveForward(): bool
     getNextPosition($direction, $newCoordinates);
 
     if (!isset($map[$newCoordinates[0]][$newCoordinates[1]])) {
-        // We will be out of bounds meaning we are done but we can still move forward
+        // We will be out of bounds meaning we are done, but we can still move forward
         return true;
     }
 
@@ -127,26 +156,3 @@ function canCreateInfiniteLoop(): bool
 
     return false;
 }
-
-parseFile();
-
-while ($isInbounds) {
-    if (canMoveForward()) {
-        moveForward();
-    } else {
-        $direction = $direction->next();
-
-        if (canCreateInfiniteLoop()) {
-            ++$possibleInfiniteLoops;
-        }
-    }
-}
-printMap();
-$somme = array_reduce(
-    $map,
-    static fn (int $carry, array $line): int => $carry + count(array_filter($line, static fn (string $char) => 'X' === $char)),
-    0
-);
-
-printf('Somme                      : %d'.PHP_EOL, $somme);
-printf('Boucles infinies possibles : %d'.PHP_EOL, $possibleInfiniteLoops);

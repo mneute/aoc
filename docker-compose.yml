@@ -1,6 +1,8 @@
+name: advent-of-code
+
 services:
     php:
-        image: php:8.4-cli
+        build:
+            context: ./php
         volumes:
-            -   .:/app
-        working_dir: /app
+            - .:/srv/app

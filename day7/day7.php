@@ -13,8 +13,8 @@ while (($line = fgets($file)) !== false) {
 
     if (isPossible($expectedResult, $data)) {
         $pt1 += $expectedResult;
-    }
-    if (isPossible($expectedResult, $data, true)) {
+        $pt2 += $expectedResult;
+    } elseif (isPossible($expectedResult, $data, true)) {
         $pt2 += $expectedResult;
     }
 }
@@ -29,10 +29,10 @@ function isPossible(int $expectedResult, array $data, bool $pt2 = false): bool
 {
     if (count($data) === 1) return $expectedResult === $data[0];
 
-    if ($expectedResult < $data[0]) return false;
-
     $n1 = array_shift($data);
     $n2 = array_shift($data);
+
+    if ($n1 > $expectedResult) return false;
 
     return isPossible($expectedResult, [$n1 + $n2, ...$data], $pt2)
         || isPossible($expectedResult, [$n1 * $n2, ...$data], $pt2)
