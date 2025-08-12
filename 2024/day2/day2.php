@@ -30,10 +30,10 @@ foreach (file(__DIR__.'/input.txt', FILE_IGNORE_NEW_LINES) as $line) {
 }
 
 printf('Part 1 : %d'.PHP_EOL, $pt1);
-printf('Part 2 : %d'.PHP_EOL, $pt2);
+printf('Part 2 : %d'.PHP_EOL.PHP_EOL, $pt2);
 
 printf('Execution time : %s seconds'.PHP_EOL, round(microtime(true) - $startTime, 4));
-printf('  Memory usage : %s Mib'.str_repeat(PHP_EOL, 2), round(memory_get_peak_usage() / (2 ** 20), 4));
+printf('  Memory usage : %s Mib'.PHP_EOL.PHP_EOL, round(memory_get_peak_usage() / (2 ** 20), 4));
 
 function isSafe(array $data): bool
 {
