@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace App\Year2023\Day04;
+
 final class Card
 {
     public function __construct(
