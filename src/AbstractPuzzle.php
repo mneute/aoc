@@ -15,8 +15,9 @@ abstract class AbstractPuzzle
     {
         $file = fopen($path, 'rb') ?: throw new \RuntimeException(sprintf('Cannot open file %s', $path));
 
+        $i = 0;
         while (false !== ($line = fgets($file))) {
-            yield trim($line);
+            yield $i++ => trim($line);
         }
 
         fclose($file);

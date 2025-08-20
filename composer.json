@@ -14,5 +14,11 @@
             "email": "morgan.neute@gmail.com"
         }
     ],
-    "require": {}
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=8.4",
+        "ext-ds": "*"
+    }
 }
