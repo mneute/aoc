@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 use App\AbstractPuzzle;
@@ -32,4 +33,3 @@ printf('Part 2 : %d'.PHP_EOL.PHP_EOL, $result->part2);
 
 printf('Execution time : %s seconds'.PHP_EOL, round(microtime(true) - $startTime, 4));
 printf('  Memory usage : %s Mib'.PHP_EOL.PHP_EOL, round(memory_get_peak_usage() / (2 ** 20), 4));
-
