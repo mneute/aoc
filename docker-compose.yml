@@ -3,6 +3,7 @@ name: advent-of-code
 services:
     php:
         build:
-            context: ./php
+            context: ./
+            dockerfile: ./php/Dockerfile
         volumes:
             - .:/srv/app
