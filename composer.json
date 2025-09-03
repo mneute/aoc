@@ -19,6 +19,8 @@
     },
     "require": {
         "php": ">=8.4",
-        "ext-ds": "*"
+        "ext-ds": "*",
+        "symfony/console": "^7.0",
+        "symfony/stopwatch": "^7.0"
     }
 }
