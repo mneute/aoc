@@ -1,5 +1,4 @@
+**/*.txt
+/.env.local
 /.idea
-**/input.txt
-**/input-test.txt
-
 /vendor/

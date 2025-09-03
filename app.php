@@ -5,6 +5,9 @@ require './vendor/autoload.php';
 
 use App\Command\RunPuzzle;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Dotenv\Dotenv;
+
+new Dotenv()->loadEnv(__DIR__ . '/.env');
 
 $command = new RunPuzzle();
 

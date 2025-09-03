@@ -13,6 +13,23 @@ abstract class AbstractPuzzle
 
     abstract public function run(): Result;
 
+    public function getFilePath(): string
+    {
+        static $path = null;
+
+        if (null === $path) {
+            $reflector = new \ReflectionClass($this);
+
+            $path = sprintf(
+                '%s/%s',
+                dirname($reflector->getFileName()),
+                $this->test ? 'input-test.txt' : 'input.txt'
+            );
+        }
+
+        return $path;
+    }
+
     /**
      * @return \Generator<string>
      */
@@ -27,16 +44,5 @@ abstract class AbstractPuzzle
         }
 
         fclose($file);
-    }
-
-    private function getFilePath(): string
-    {
-        $reflector = new \ReflectionClass($this);
-
-        return sprintf(
-            '%s/%s',
-            dirname($reflector->getFileName()),
-            $this->test ? 'input-test.txt' : 'input.txt'
-        );
     }
 }
