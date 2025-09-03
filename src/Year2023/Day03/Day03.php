@@ -9,8 +9,6 @@ use App\Result;
 
 final class Day03 extends AbstractPuzzle
 {
-    private const string INPUT_FILE = __DIR__ . '/input.txt';
-
     // @formatter:off
     private const array DIRECTIONS = [
         'North'      => [-1, 0],
@@ -78,7 +76,7 @@ final class Day03 extends AbstractPuzzle
 
     private function parseFile(): void
     {
-        foreach ($this->readFile(self::INPUT_FILE) as $line) {
+        foreach ($this->readFile() as $line) {
             $this->map[] = str_split($line);
         }
     }

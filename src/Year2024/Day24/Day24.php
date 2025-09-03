@@ -16,7 +16,7 @@ final class Day24 extends AbstractPuzzle
     {
         $hasMetEmptyLine = false;
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             if ('' === $line) {
                 $hasMetEmptyLine = true;
                 continue;

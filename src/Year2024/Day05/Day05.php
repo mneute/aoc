@@ -50,7 +50,7 @@ final class Day05 extends AbstractPuzzle
     private function parseFile(): void
     {
         $hasMetEmtpyLine = false;
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             if ('' === $line) {
                 $hasMetEmtpyLine = true;
                 continue;

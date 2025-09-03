@@ -5,6 +5,7 @@ require './vendor/autoload.php';
 
 use App\AbstractPuzzle;
 use Symfony\Component\Console\Attribute\Argument;
+use Symfony\Component\Console\Attribute\Option;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\SingleCommandApplication;
@@ -12,19 +13,24 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 new SingleCommandApplication()
-        ->setCode(function (InputInterface $input, OutputInterface $output, #[Argument] string $year, #[Argument] string $day): int {
+        ->setCode(function (
+                InputInterface $input,
+                OutputInterface $output,
+                #[Argument] string $year,
+                #[Argument] string $day,
+                #[Option(shortcut: 't')] bool $test = false
+        ): int {
             $day = str_pad($day, 2, '0', STR_PAD_LEFT);
 
             $className = sprintf('App\\Year%1$s\\Day%2$s\\Day%2$s', $year, $day);
-
             if (!class_exists($className)) {
                 throw new InvalidArgumentException(sprintf('Class %s does not exist', $className));
             }
-
-            $instance = new $className();
-            if (!$instance instanceof AbstractPuzzle) {
+            if (!is_subclass_of($className, AbstractPuzzle::class)) {
                 throw new LogicException(sprintf('%s should be an instance of %s', $className, AbstractPuzzle::class));
             }
+
+            $instance = new $className($test);
 
             $event = new Stopwatch(true)->start('puzzle');
 

@@ -9,15 +9,13 @@ use App\Result;
 
 final class Day15 extends AbstractPuzzle
 {
-    private const string INPUT_FILE = __DIR__ . '/input.txt';
-
     /** @var array<Box> */
     private array $boxes = [];
 
     public function run(): Result
     {
         $input = '';
-        foreach ($this->readFile(self::INPUT_FILE) as $line) {
+        foreach ($this->readFile() as $line) {
             $input .= $line;
         }
 

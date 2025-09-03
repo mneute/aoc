@@ -13,7 +13,7 @@ final class Day04 extends AbstractPuzzle
 
         $pt1 = 0;
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             preg_match('#^Card\s+(?<id>\d+):(?<winning>(?: +\d+)+) \|(?<drawn>(?: +\d+)+)$#', $line, $matches);
 
             $winning = preg_replace('#\s{2,}#', ' ', trim($matches['winning']));

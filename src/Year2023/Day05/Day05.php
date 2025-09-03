@@ -9,8 +9,6 @@ use App\Result;
 
 final class Day05 extends AbstractPuzzle
 {
-    private const string INPUT_FILE = __DIR__ . '/input.txt';
-
     /** @var list<int> */
     private array $seeds;
 
@@ -33,7 +31,7 @@ final class Day05 extends AbstractPuzzle
     {
         $currentIndex = -1;
 
-        foreach ($this->readFile(self::INPUT_FILE) as $i => $line) {
+        foreach ($this->readFile() as $i => $line) {
             if (0 === $i) {
                 $this->seeds = $this->getNumbers($line);
                 continue;
