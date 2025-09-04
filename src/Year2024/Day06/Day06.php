@@ -43,7 +43,7 @@ final class Day06 extends AbstractPuzzle
 
     private function parseFile(): void
     {
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             $this->map[] = str_split($line);
         }
 

@@ -34,7 +34,7 @@ final class Day18 extends AbstractPuzzle
         );
 
         $lineCount = 0;
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             if ($lineCount++ >= self::MAX_FALLEN_BYTES) {
                 break;
             }

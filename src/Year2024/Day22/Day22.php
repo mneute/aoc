@@ -14,7 +14,7 @@ final class Day22 extends AbstractPuzzle
     public function run(): Result
     {
         $pt1 = 0;
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             $pt1 += $this->nextSecret((int) $line, 2000);
         }
 

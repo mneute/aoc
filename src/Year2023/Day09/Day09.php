@@ -9,13 +9,11 @@ use App\Result;
 
 final class Day09 extends AbstractPuzzle
 {
-    private const string INPUT_FILE = __DIR__ . '/input.txt';
-
     public function run(): Result
     {
         $pt1 = $pt2 = 0;
 
-        foreach ($this->readFile(self::INPUT_FILE) as $line) {
+        foreach ($this->readFile() as $line) {
             $numbers = array_map(intval(...), explode(' ', $line));
 
             $pt1 += $this->getNextValue($numbers);

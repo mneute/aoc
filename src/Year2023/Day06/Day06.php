@@ -9,8 +9,6 @@ use App\Result;
 
 final class Day06 extends AbstractPuzzle
 {
-    private const string INPUT_FILE = __DIR__ . '/input.txt';
-
     /** @var array<int> */
     private array $times = [];
 
@@ -38,7 +36,7 @@ final class Day06 extends AbstractPuzzle
 
     private function parseFile(): void
     {
-        foreach ($this->readFile(self::INPUT_FILE) as $i => $line) {
+        foreach ($this->readFile() as $i => $line) {
             preg_match_all('#\b\d+\b#', $line, $matches);
 
             if (0 === $i) {

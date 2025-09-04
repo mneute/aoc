@@ -30,7 +30,7 @@ final class Day15 extends AbstractPuzzle
     private function parseFile(): void
     {
         $hasReachedEmptyLine = false;
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             if ($line === '') {
                 $hasReachedEmptyLine = true;
                 continue;

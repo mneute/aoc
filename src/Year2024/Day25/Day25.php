@@ -31,7 +31,7 @@ final class Day25 extends AbstractPuzzle
         /** @var ?Type $type */
         $type = null;
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $i => $line) {
+        foreach ($this->readFile() as $i => $line) {
             if (0 === $i % 8) {
                 if (str_starts_with($line, '.')) {
                     $type = Type::KEY;

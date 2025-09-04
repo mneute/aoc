@@ -13,7 +13,7 @@ final class Day11 extends AbstractPuzzle
 
     public function run(): Result
     {
-        $stones = array_map(intval(...), explode(' ', trim(file_get_contents(__DIR__.'/input.txt'))));
+        $stones = array_map(intval(...), explode(' ', trim(file_get_contents($this->getFilePath()))));
 
         $pt1 = $pt2 = 0;
 

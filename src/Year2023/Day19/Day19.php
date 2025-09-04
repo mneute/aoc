@@ -9,7 +9,6 @@ use App\Result;
 
 final class Day19 extends AbstractPuzzle
 {
-    private const string INPUT_FILE = __DIR__ . '/input.txt';
     private const string WORKFLOWS = '#^(?<name>[a-z]+)\{(?<detail>.+)\}#';
 
     /** @var array<string, Workflow> */
@@ -20,7 +19,7 @@ final class Day19 extends AbstractPuzzle
         $pt1 = 0;
 
         $hasMetEmptyLine = false;
-        foreach ($this->readFile(self::INPUT_FILE) as $line) {
+        foreach ($this->readFile() as $line) {
             if ('' === $line) {
                 $hasMetEmptyLine = true;
                 continue;

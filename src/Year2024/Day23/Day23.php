@@ -19,7 +19,7 @@ final class Day23 extends AbstractPuzzle
         // $networks = [];
         $pt1 = 0;
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             [$a, $b] = explode('-', $line);
 
             ($links[$a] ??= new Set())->add($b);

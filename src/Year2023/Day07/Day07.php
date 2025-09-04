@@ -9,14 +9,12 @@ use App\Result;
 
 final class Day07 extends AbstractPuzzle
 {
-    private const string INPUT_FILE = __DIR__ . '/input.txt';
-
     public function run(): Result
     {
         $pt1 = $pt2 = 0;
 
         $hands = [];
-        foreach ($this->readFile(self::INPUT_FILE) as $line) {
+        foreach ($this->readFile() as $line) {
             preg_match('#^(?<hand>[AKQJT2-9]{5})\s+(?<bid>\d+)$#', $line, $matches);
 
             $hands[] = new Hand($matches['hand'], (int) $matches['bid']);

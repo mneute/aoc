@@ -16,7 +16,7 @@ final class Day03 extends AbstractPuzzle
         $pt1 = $pt2 = 0;
 
         $isOn = true;
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             preg_match_all(sprintf('/%s/', self::REGEX), $line, $matchesPart1);
 
             foreach ($matchesPart1[1] as $i => $a) {

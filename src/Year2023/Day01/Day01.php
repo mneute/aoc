@@ -16,7 +16,7 @@ final class Day01 extends AbstractPuzzle
 
         $pt1 = $pt2 = 0;
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             $firstNumberPt1 = $this->getFirstOccurence($line, $pt1Chars);
             $lastNumberPt1 = $this->getLastOccurence($line, $pt1Chars);
             $numberPt1 = (int) ($firstNumberPt1.$lastNumberPt1);

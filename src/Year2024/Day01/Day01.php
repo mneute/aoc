@@ -18,7 +18,7 @@ final class Day01 extends AbstractPuzzle
 
         $cachePt2 = [];
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             if (1 === preg_match('/^(\d+)\s+(\d+)$/', $line, $matches)) {
                 $column1[] = (int) $matches[1];
                 $column2[] = (int) $matches[2];

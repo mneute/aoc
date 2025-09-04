@@ -6,14 +6,37 @@ namespace App;
 
 abstract class AbstractPuzzle
 {
+    public function __construct(
+        private readonly bool $test,
+    ) {
+    }
+
     abstract public function run(): Result;
+
+    public function getFilePath(): string
+    {
+        static $path = null;
+
+        if (null === $path) {
+            $reflector = new \ReflectionClass($this);
+
+            $path = sprintf(
+                '%s/%s',
+                dirname($reflector->getFileName()),
+                $this->test ? 'input-test.txt' : 'input.txt'
+            );
+        }
+
+        return $path;
+    }
 
     /**
      * @return \Generator<string>
      */
-    protected function readFile(string $path): \Generator
+    protected function readFile(): \Generator
     {
-        $file = fopen($path, 'rb') ?: throw new \RuntimeException(sprintf('Cannot open file %s', $path));
+        $file = fopen($this->getFilePath(), 'rb')
+            ?: throw new \RuntimeException(sprintf('Cannot open file %s', $this->getFilePath()));
 
         $i = 0;
         while (false !== ($line = fgets($file))) {

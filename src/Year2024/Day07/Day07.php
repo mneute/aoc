@@ -13,7 +13,7 @@ final class Day07 extends AbstractPuzzle
     {
         $pt1 = $pt2 = 0;
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             $data = array_map(intval(...), explode(' ', $line));
 
             $expectedResult = array_shift($data);

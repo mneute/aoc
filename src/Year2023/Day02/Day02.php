@@ -15,7 +15,7 @@ final class Day02 extends AbstractPuzzle
     {
         $pt1 = $pt2 = 0;
 
-        foreach ($this->readFile(__DIR__.'/input.txt') as $line) {
+        foreach ($this->readFile() as $line) {
             $minRed = $minGreen = $minBlue = 1;
 
             preg_match('#^Game (?<id>\d+): (?<input>.+)$#', $line, $gameMatches);
