@@ -15,7 +15,9 @@ final class Day04 extends AbstractPuzzle
     {
         $pt1 = $pt2 = 0;
 
-        self::$input = array_map(str_split(...), file(__DIR__.'/input.txt', FILE_IGNORE_NEW_LINES));
+        foreach ($this->readFile() as $line) {
+            self::$input[] = str_split($line);
+        }
 
         for ($i = 0; $i < count(self::$input); $i++) {
             for ($j = 0; $j < count(self::$input[$i]); $j++) {
@@ -25,7 +27,7 @@ final class Day04 extends AbstractPuzzle
             }
         }
 
-        return new Result($pt1, 0);
+        return new Result($pt1, $pt2);
     }
 
     private function tryPart1(int $i, int $j): int
@@ -35,14 +37,14 @@ final class Day04 extends AbstractPuzzle
         $steps = 3;
 
         $directions = [
-            [0, 1], // ➡
-            [1, 1], // ↘
-            [1, 0], // ⬇
-            [1, -1], // ↙
-            [0, -1], // ⬅
-            [-1, -1], // ↖
-            [-1, 0], // ⬆
-            [-1, 1], // ↗
+            '➡' => [0, 1],
+            '↘' => [1, 1],
+            '⬇' => [1, 0],
+            '↙' => [1, -1],
+            '⬅' => [0, -1],
+            '↖' => [-1, -1],
+            '⬆' => [-1, 0],
+            '↗' => [-1, 1],
         ];
 
         $count = 0;
@@ -68,9 +70,7 @@ final class Day04 extends AbstractPuzzle
         $j += $stepJ;
 
         foreach (['M', 'A', 'S'] as $letter) {
-            if ($letter !== self::$input[$i][$j]) {
-                return false;
-            }
+            if ($letter !== self::$input[$i][$j]) return false;
 
             $i += $stepI;
             $j += $stepJ;

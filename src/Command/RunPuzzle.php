@@ -35,12 +35,8 @@ final class RunPuzzle extends Command
         $test = $input->getOption('test');
 
         $className = sprintf('App\\Year%1$s\\Day%2$s\\Day%2$s', $year, $day);
-        if (!class_exists($className)) {
-            throw new \InvalidArgumentException(sprintf('Class %s does not exist', $className));
-        }
-        if (!is_subclass_of($className, AbstractPuzzle::class)) {
-            throw new \LogicException(sprintf('%s should be an instance of %s', $className, AbstractPuzzle::class));
-        }
+        if (!class_exists($className)) throw new \InvalidArgumentException(sprintf('Class %s does not exist', $className));
+        if (!is_subclass_of($className, AbstractPuzzle::class)) throw new \LogicException(sprintf('%s should be an instance of %s', $className, AbstractPuzzle::class));
 
         $io = new SymfonyStyle($input, $output);
 
