@@ -17,7 +17,7 @@ final class Day18 extends AbstractPuzzle
     ];
     private const string REGEX = '#^(?<direction>[RDLU])\s+(?<count>\d+)\s+\((?<color>\#[a-f0-9]{6})\)$#';
 
-    /** @var list<list<string>> */
+    /** @var array<int, array<int, string>> */
     private array $map = [['#']];
 
     /** @var array{0: int, 1: int} */
@@ -30,31 +30,15 @@ final class Day18 extends AbstractPuzzle
         $pt1 = $pt2 = 0;
 
         foreach ($this->readFile() as $line) {
-            preg_match(self::REGEX, $line, $matches);
-            ['direction' => $direction, 'count' => $count] = $matches;
+            if (1 !== preg_match(self::REGEX, $line, $matches)) throw new \RuntimeException('Invalid line: ' . $line);
+            $direction = $matches['direction'];
+            $count = (int) $matches['count'];
+            \assert(1 <= $count);
 
-            $movement = self::DIRECTIONS[$direction];
-
-            for ($i = 1; $i <= $count; $i++) {
-                $newI = $this->currentPosition[0] + $movement[0];
-                $newJ = $this->currentPosition[1] + $movement[1];
-
-                if ($newI > $this->maxI) {
-                    $this->map[$newI] = array_fill(0, $this->maxJ + 1, '.');
-                    $this->maxI = $newI;
-                }
-                if ($newJ > $this->maxJ) {
-                    foreach ($this->map as &$mapLine) $mapLine[$newJ] = '.';
-                    $this->maxJ = $newJ;
-                }
-
-                $this->map[$newI][$newJ] = '#';
-                $this->currentPosition = [$newI, $newJ];
-            }
+            $this->moveCursor($direction, $count);
         }
-        $this->printMap();
 
-        foreach ($this->map as $i => $line) {
+        foreach ($this->map as $line) {
             $str = implode('', $line);
             $first = strpos($str, '#');
             $last = strrpos($str, '#');
@@ -65,14 +49,26 @@ final class Day18 extends AbstractPuzzle
         return new Result($pt1, $pt2);
     }
 
-    private function printMap(): void
+    /**
+     * @param int<1, max> $count
+     */
+    private function moveCursor(string $direction, int $count): void
     {
-        foreach ($this->map as $line) {
-            foreach ($line as $char) {
-                echo $char;
+        for ($i = 1; $i <= $count; ++$i) {
+            $newI = $this->currentPosition[0] + self::DIRECTIONS[$direction][0];
+            $newJ = $this->currentPosition[1] + self::DIRECTIONS[$direction][1];
+
+            if ($newI > $this->maxI) {
+                $this->map[$newI] = array_fill(0, $this->maxJ + 1, '.');
+                $this->maxI = $newI;
             }
-            echo PHP_EOL;
+            if ($newJ > $this->maxJ) {
+                foreach ($this->map as &$mapLine) $mapLine[$newJ] = '.';
+                $this->maxJ = $newJ;
+            }
+
+            $this->map[$newI][$newJ] = '#';
+            $this->currentPosition = [$newI, $newJ];
         }
-        echo PHP_EOL;
     }
 }
