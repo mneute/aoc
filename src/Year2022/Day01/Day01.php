@@ -9,13 +9,17 @@ use App\Result;
 
 final class Day01 extends AbstractPuzzle
 {
+    private int $pt1 = 0;
+
+    /** @var list<int> */
+    private array $pt2 = [];
+
     public function run(): Result
     {
-        $pt1 = $pt2 = $current = 0;
-
+        $current = 0;
         foreach ($this->readFile() as $line) {
             if ('' === $line) {
-                $pt1 = max($pt1, $current);
+                $this->updateCounters($current);
                 $current = 0;
 
                 continue;
@@ -23,9 +27,28 @@ final class Day01 extends AbstractPuzzle
 
             $current += (int) $line;
         }
-        // Just in case the last group is the biggest one
-        $pt1 = max($pt1, $current);
+        // One last update when we reached the end of the file
+        $this->updateCounters($current);
 
-        return new Result($pt1, $pt2);
+        return new Result($this->pt1, array_sum($this->pt2));
+    }
+
+    private function updateCounters(int $current): void
+    {
+        $this->pt1 = max($this->pt1, $current);
+
+        if (count($this->pt2) < 3) {
+            $this->pt2[] = $current;
+            rsort($this->pt2);
+            return;
+        }
+
+        foreach ($this->pt2 as $index => $item) {
+            if ($item < $current) {
+                array_splice($this->pt2, $index, 0, $current);
+                $this->pt2 = array_slice($this->pt2, 0, 3);
+                return;
+            }
+        }
     }
 }
