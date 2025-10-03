@@ -40,7 +40,7 @@ abstract class AbstractPuzzle
 
         $i = 0;
         while (false !== ($line = fgets($file))) {
-            yield $i++ => trim($line);
+            yield $i++ => trim($line, "\r\n");
         }
 
         fclose($file);

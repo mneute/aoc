@@ -63,10 +63,10 @@ final class RunPuzzle extends Command
 
         $io->writeln(sprintf(' %d ms - %.2F MiB', $event->getDuration(), $event->getMemory() >> 20));
 
-        return 0;
+        return self::SUCCESS;
     }
 
-    private function downloadInputFile(string $getFilePath, int $year, int $day): void
+    private function downloadInputFile(string $filePath, int $year, int $day): void
     {
         $cookie = $_ENV['AOC_SESSION_ID']
             ?: throw new \RuntimeException('Missing session ID, set the AOC_SESSION_ID value in your .env.local file');
@@ -77,6 +77,6 @@ final class RunPuzzle extends Command
 
         $response = $client->request('GET', sprintf('https://adventofcode.com/%d/day/%d/input', $year, $day));
 
-        file_put_contents($getFilePath, $response->getContent());
+        file_put_contents($filePath, $response->getContent());
     }
 }
