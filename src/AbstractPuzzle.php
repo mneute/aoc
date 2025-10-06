@@ -31,7 +31,7 @@ abstract class AbstractPuzzle
     }
 
     /**
-     * @return \Generator<string>
+     * @return \Generator<int, string> The key is the line number (0 indexed), the value is the line itself (line endings are trimed)
      */
     protected function readFile(): \Generator
     {
