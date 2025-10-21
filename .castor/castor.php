@@ -21,6 +21,12 @@ function bash(): void
     run((new DockerCompose())->run());
 }
 
+#[AsTask(description: 'Updates the permissions of the project dir', aliases: ['chown'])]
+function updatePermissions(): void
+{
+    run('sudo chown -R ${USER}: .');
+}
+
 #[AsContext(default: true)]
 function defaultContext(): Context
 {
