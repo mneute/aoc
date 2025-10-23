@@ -4,7 +4,7 @@
 
 Simply run `docker compose run --rm php php ./app.php <year> <day>`.
 
-You can also use `make bash` and then `./app.php <year> <day>`.
+You can also use `castor bash` and then `./app.php <year> <day>`.
 
 To run in test mode, create the `input-test.txt` file in the corresponding folder and run `./app.php --test <year> <day>`
 
