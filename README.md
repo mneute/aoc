@@ -2,11 +2,9 @@
 
 ## How to run
 
-Simply run `docker compose run --rm php php ./app.php <year> <day>`.
+First you need to build the image with `castor build`, then you can simply run `castor run <year> <day> [--test|-t]`.
 
-You can also use `castor bash` and then `./app.php <year> <day>`.
-
-To run in test mode, create the `input-test.txt` file in the corresponding folder and run `./app.php --test <year> <day>`
+You can also use `castor bash` and then `./app.php <year> <day> [--test|-t]`.
 
 ### Notes
 

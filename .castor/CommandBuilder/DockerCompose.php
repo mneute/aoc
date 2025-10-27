@@ -10,7 +10,8 @@ final class DockerCompose implements CommandBuilderInterface
 {
     private string $container = 'php';
     private bool $build = false;
-    private bool $run = false;
+    private bool $bash = false;
+    private array $puzzle = [];
 
     public function container(string $name): self
     {
@@ -21,14 +22,30 @@ final class DockerCompose implements CommandBuilderInterface
     public function build(): self
     {
         $this->build = true;
-        $this->run = false;
+
+        $this->bash = false;
+        $this->puzzle = [];
+
         return $this;
     }
 
-    public function run(): self
+    public function bash(): self
     {
+        $this->bash = true;
+
         $this->build = false;
-        $this->run = true;
+        $this->puzzle = [];
+
+        return $this;
+    }
+
+    public function puzzle(int $year, int $day, bool $test): self
+    {
+        $this->puzzle = [$year, $day];
+        if ($test) $this->puzzle[] = '--test';
+
+        $this->build = $this->bash = false;
+
         return $this;
     }
 
@@ -49,13 +66,23 @@ final class DockerCompose implements CommandBuilderInterface
                 '--pull',
                 $this->container,
             ];
-        } elseif ($this->run) {
+        } elseif ($this->bash) {
             return [
                 ...$command,
                 'run',
                 '--rm',
                 $this->container,
                 '/bin/bash',
+            ];
+        } elseif ([] !== $this->puzzle) {
+            return [
+                ...$command,
+                'run',
+                '--rm',
+                $this->container,
+                'php',
+                'app.php',
+                ...$this->puzzle,
             ];
         }
 
