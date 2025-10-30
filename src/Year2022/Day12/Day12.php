@@ -1,0 +1,102 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Year2022\Day12;
+
+use App\AbstractPuzzle;
+use App\Result;
+use Ds\Queue;
+
+final class Day12 extends AbstractPuzzle
+{
+    private const array DIRECTIONS = [
+        'U' => [-1, 0],
+        'R' => [0, 1],
+        'D' => [1, 0],
+        'L' => [0, -1],
+    ];
+
+    /** @var list<list<string>> */
+    private array $map = [];
+
+    public function run(): Result
+    {
+        $start = $end = null;
+        /** @var list<array{0: int, 1: int}> $part2Starts */
+        $part2Starts = [];
+        foreach ($this->readFile() as $i => $line) {
+            $this->map[] = str_split($line);
+
+            if (false !== ($col = strpos($line, 'S'))) {
+                $start = [$i, $col];
+            }
+            if (false !== ($col = strpos($line, 'E'))) {
+                $end = [$i, $col];
+            }
+
+            $offset = 0;
+            while (false !== ($offset = strpos($line, 'a', $offset))) {
+                $part2Starts[] = [$i, $offset];
+                $offset++;
+            }
+        }
+        assert(is_array($start), 'No starting point found for part 1');
+        assert(is_array($end), 'No ending point found');
+        assert(1 <= count($part2Starts), 'No starting point found for part 2');
+
+        $part1 = $this->dijkstra($start, $end);
+        $minPart2 = PHP_INT_MAX;
+        foreach ($part2Starts as $part2Start) {
+            $shortestPath = $this->dijkstra($part2Start, $end);
+            if (-1 === $shortestPath) continue;
+            $minPart2 = min($minPart2, $shortestPath);
+        }
+
+        return new Result(
+            $part1,
+            $minPart2,
+        );
+    }
+
+    /**
+     * @param array{0: int, 1: int} $start
+     * @param array{0: int, 1: int} $end
+     */
+    private function dijkstra(array $start, array $end): int
+    {
+        $queue = new Queue();
+        $queue->push([$start, 0]);
+
+        $visited = [];
+
+        foreach ($queue as [$position, $steps]) {
+            if ($position === $end) return $steps;
+
+            $currentElevation = $this->elevation($this->map[$position[0]][$position[1]]);
+
+            foreach (self::DIRECTIONS as $direction) {
+                [$x, $y] = [$position[0] + $direction[0], $position[1] + $direction[1]];
+
+                if (!isset($this->map[$x][$y])) continue;
+
+                if ($currentElevation + 1 < $this->elevation($this->map[$x][$y])) continue;
+
+                $key = "$x#$y";
+                if ($visited[$key] ?? false) continue;
+
+                $visited[$key] = true;
+                $queue->push([[$x, $y], $steps + 1]);
+            }
+        }
+
+        return -1;
+    }
+
+    private function elevation(string $char): int
+    {
+        static $cache = [];
+
+        return $cache[$char] ??= (ord(str_replace(['S', 'E'], ['a', 'z'], $char)) - 96);
+    }
+}
