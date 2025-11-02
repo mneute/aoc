@@ -1,5 +1,5 @@
 **/*.txt
-/.castor.stub.php
+**/.castor.stub.php
 /.env.local
 /.idea/
 /vendor/

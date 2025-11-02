@@ -22,14 +22,14 @@ final class Day12 extends AbstractPuzzle
 
     public function run(): Result
     {
-        $start = $end = null;
+        $part1Start = $end = null;
         /** @var list<array{0: int, 1: int}> $part2Starts */
         $part2Starts = [];
         foreach ($this->readFile() as $i => $line) {
             $this->map[] = str_split($line);
 
             if (false !== ($col = strpos($line, 'S'))) {
-                $start = [$i, $col];
+                $part1Start = [$i, $col];
             }
             if (false !== ($col = strpos($line, 'E'))) {
                 $end = [$i, $col];
@@ -41,21 +41,22 @@ final class Day12 extends AbstractPuzzle
                 $offset++;
             }
         }
-        assert(is_array($start), 'No starting point found for part 1');
+        assert(is_array($part1Start), 'No starting point found for part 1');
         assert(is_array($end), 'No ending point found');
         assert(1 <= count($part2Starts), 'No starting point found for part 2');
 
-        $part1 = $this->dijkstra($start, $end);
-        $minPart2 = PHP_INT_MAX;
+        $part1 = $this->dijkstra($part1Start, $end);
+
+        $part2 = PHP_INT_MAX;
         foreach ($part2Starts as $part2Start) {
             $shortestPath = $this->dijkstra($part2Start, $end);
             if (-1 === $shortestPath) continue;
-            $minPart2 = min($minPart2, $shortestPath);
+            $part2 = min($part2, $shortestPath);
         }
 
         return new Result(
             $part1,
-            $minPart2,
+            $part2,
         );
     }
 
