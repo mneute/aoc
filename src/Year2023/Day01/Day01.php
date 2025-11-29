@@ -19,13 +19,13 @@ final class Day01 extends AbstractPuzzle
         foreach ($this->readFile() as $line) {
             $firstNumberPt1 = $this->getFirstOccurence($line, $pt1Chars);
             $lastNumberPt1 = $this->getLastOccurence($line, $pt1Chars);
-            $numberPt1 = (int) ($firstNumberPt1.$lastNumberPt1);
+            $numberPt1 = (int) ($firstNumberPt1 . $lastNumberPt1);
 
             $pt1 += $numberPt1;
 
             $firstNumberPt2 = $this->getFirstOccurence($line, $pt2Chars);
             $lastNumberPt2 = $this->getLastOccurence($line, $pt2Chars);
-            $numberPt2 = (int) ($firstNumberPt2.$lastNumberPt2);
+            $numberPt2 = (int) ($firstNumberPt2 . $lastNumberPt2);
 
             $pt2 += $numberPt2;
         }
@@ -35,7 +35,7 @@ final class Day01 extends AbstractPuzzle
 
     private function getFirstOccurence(string $input, array $needles): int
     {
-        $min = PHP_INT_MAX;
+        $min = \PHP_INT_MAX;
         $value = -1;
 
         foreach ($needles as $index => $needle) {

@@ -19,7 +19,7 @@ final class Day05 extends AbstractPuzzle
     {
         $this->parseFile();
 
-        $pt1 = PHP_INT_MAX;
+        $pt1 = \PHP_INT_MAX;
         foreach ($this->seeds as $seed) {
             $pt1 = min($pt1, $this->getLocation($seed));
         }

@@ -46,7 +46,7 @@ final class Day06 extends AbstractPuzzle
             }
         }
 
-        if (count($this->times) !== count($this->distances)) {
+        if (\count($this->times) !== \count($this->distances)) {
             throw new \LogicException("Invalid input, the columns don't match");
         }
     }
@@ -56,8 +56,8 @@ final class Day06 extends AbstractPuzzle
         $firstToBeat = 1;
         $lastToBeat = $time - 1;
 
-        while ($this->getDistance($time, $firstToBeat) <= $distanceToBeat) $firstToBeat++;
-        while ($this->getDistance($time, $lastToBeat) <= $distanceToBeat) $lastToBeat--;
+        while ($this->getDistance($time, $firstToBeat) <= $distanceToBeat) ++$firstToBeat;
+        while ($this->getDistance($time, $lastToBeat) <= $distanceToBeat) --$lastToBeat;
 
         return $lastToBeat - $firstToBeat + 1;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Year2023\Day02;
 
 use App\AbstractPuzzle;
@@ -42,7 +44,7 @@ final class Day02 extends AbstractPuzzle
                         $max = self::MAX_BLUE;
                         $minBlue = max($minBlue, $count);
                     } else {
-                        throw new \RuntimeException(sprintf('Unknown color : %s', $color));
+                        throw new \RuntimeException(\sprintf('Unknown color : %s', $color));
                     }
 
                     if ($max < $count) {

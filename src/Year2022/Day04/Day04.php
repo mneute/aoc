@@ -28,10 +28,10 @@ final class Day04 extends AbstractPuzzle
             $group2 = new Group((int) $p2_1, (int) $p2_2);
 
             if ($group1->contains($group2) || $group2->contains($group1)) {
-                $pt1++;
+                ++$pt1;
             }
             if ($group1->overlaps($group2)) {
-                $pt2++;
+                ++$pt2;
             }
         }
 

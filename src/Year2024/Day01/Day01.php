@@ -28,10 +28,10 @@ final class Day01 extends AbstractPuzzle
         sort($column1);
         sort($column2);
 
-        foreach (range(0, count($column1) - 1) as $i) {
+        foreach (range(0, \count($column1) - 1) as $i) {
             $pt1 += abs($column1[$i] - $column2[$i]);
 
-            $pt2 += ($cachePt2[$column1[$i]] ??= $column1[$i] * count(array_filter($column2, static fn (int $j): bool => $column1[$i] === $j)));
+            $pt2 += ($cachePt2[$column1[$i]] ??= $column1[$i] * \count(array_filter($column2, static fn (int $j): bool => $column1[$i] === $j)));
         }
 
         return new Result($pt1, $pt2);

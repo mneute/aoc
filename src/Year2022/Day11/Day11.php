@@ -19,7 +19,7 @@ final class Day11 extends AbstractPuzzle
             $monkeys[$monkey->id] = $monkey;
         }
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 20; ++$i) {
             foreach ($monkeys as $monkey) {
                 foreach ($monkey->processItems() as $nextMonkey => $item) {
                     $monkeys[$nextMonkey]->addItem($item);

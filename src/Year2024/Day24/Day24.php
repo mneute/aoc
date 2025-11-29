@@ -57,7 +57,7 @@ final class Day24 extends AbstractPuzzle
             'AND' => $valA & $valB,
             'OR' => $valA | $valB,
             'XOR' => $valA ^ $valB,
-            default => throw new \RuntimeException(sprintf('Unmanaged operation : %s', $operation))
+            default => throw new \RuntimeException(\sprintf('Unmanaged operation : %s', $operation)),
         };
     }
 }

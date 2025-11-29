@@ -17,7 +17,7 @@ final class Day03 extends AbstractPuzzle
 
         $isOn = true;
         foreach ($this->readFile() as $line) {
-            preg_match_all(sprintf('/%s/', self::REGEX), $line, $matchesPart1);
+            preg_match_all(\sprintf('/%s/', self::REGEX), $line, $matchesPart1);
 
             foreach ($matchesPart1[1] as $i => $a) {
                 $b = $matchesPart1[2][$i];
@@ -25,14 +25,14 @@ final class Day03 extends AbstractPuzzle
                 $pt1 += ($a * $b);
             }
 
-            preg_match_all(sprintf('/do(?:n\'t)?\(\)|%s/', self::REGEX), $line, $matchesPart2);
+            preg_match_all(\sprintf('/do(?:n\'t)?\(\)|%s/', self::REGEX), $line, $matchesPart2);
 
             foreach ($matchesPart2[0] as $i => $instruction) {
-                if ($instruction === 'do()') {
+                if ('do()' === $instruction) {
                     $isOn = true;
                     continue;
                 }
-                if ($instruction === "don't()") {
+                if ("don't()" === $instruction) {
                     $isOn = false;
                     continue;
                 }

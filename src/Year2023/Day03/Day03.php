@@ -11,13 +11,13 @@ final class Day03 extends AbstractPuzzle
 {
     // @formatter:off
     private const array DIRECTIONS = [
-        'North'      => [-1, 0],
+        'North' => [-1, 0],
         'North-East' => [-1, 1],
-        'East'       => [0, 1],
+        'East' => [0, 1],
         'South-East' => [1, 1],
-        'South'      => [1, 0],
+        'South' => [1, 0],
         'South-West' => [1, -1],
-        'West'       => [0, -1],
+        'West' => [0, -1],
         'North-West' => [-1, -1],
     ];
     // @formatter:on
@@ -44,7 +44,7 @@ final class Day03 extends AbstractPuzzle
                     if ($number->valid) continue;
 
                     $number->valid = $this->hasSymbolAround([$i, $j]);
-                } elseif ($number->number !== '') {
+                } elseif ('' !== $number->number) {
                     if ($number->valid) $pt1 += (int) $number->number;
 
                     $number->reset();
@@ -61,7 +61,7 @@ final class Day03 extends AbstractPuzzle
 
                 $numbers = $this->getNumbersAround([$i, $j]);
 
-                if (2 !== count($numbers)) continue;
+                if (2 !== \count($numbers)) continue;
 
                 $pt2 += array_reduce(
                     $numbers,
@@ -100,6 +100,7 @@ final class Day03 extends AbstractPuzzle
 
     /**
      * @param array{0: int, 1: int} $coordinates
+     *
      * @return list<int>
      */
     private function getNumbersAround(array $coordinates): array
@@ -123,14 +124,14 @@ final class Day03 extends AbstractPuzzle
             while (is_numeric($this->map[$i][$j2] ?? '.')) {
                 $number .= $this->map[$i][$j2];
                 $alreadyVisited[$i][$j2] = true;
-                $j2++;
+                ++$j2;
             }
 
             $j2 = $j - 1;
             while (is_numeric($this->map[$i][$j2] ?? '.')) {
                 $number = $this->map[$i][$j2] . $number;
                 $alreadyVisited[$i][$j2] = true;
-                $j2--;
+                --$j2;
             }
 
             $numbers[] = (int) $number;

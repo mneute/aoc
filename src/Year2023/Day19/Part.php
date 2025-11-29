@@ -7,7 +7,6 @@ namespace App\Year2023\Day19;
 final readonly class Part
 {
     private const string REGEX = '#^\{x=(?<x>\d+),m=(?<m>\d+),a=(?<a>\d+),s=(?<s>\d+)\}$#';
-
     public int $x;
     public int $m;
     public int $a;

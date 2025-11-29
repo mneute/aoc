@@ -8,7 +8,7 @@ final readonly class Workflow
 {
     private const string REGEXP = '#^((?<letter>[xmas])(?<op><|>)(?<limit>\d+)\:)?(?<outcome>[ARa-z]+)$#';
 
-    /** @var list<callable(Part $part): ?string> */
+    /** @var list<callable(Part): ?string> */
     private array $steps;
 
     public function __construct(public string $input)
@@ -29,7 +29,7 @@ final readonly class Workflow
                 'limit' => $limit,
             ] = $matches;
 
-            if ($op === '<') {
+            if ('<' === $op) {
                 $steps[] = fn (Part $part): ?string => $part->{$letter} < $limit ? $outcome : null;
             } else {
                 $steps[] = fn (Part $part): ?string => $part->{$letter} > $limit ? $outcome : null;
@@ -42,9 +42,9 @@ final readonly class Workflow
     {
         foreach ($this->steps as $step) {
             $result = $step($part);
-            if (is_string($result)) return $result;
+            if (\is_string($result)) return $result;
         }
 
-        throw new \RuntimeException(sprintf('The workflow %s could not handle the part %s', $this->input, $part->input));
+        throw new \RuntimeException(\sprintf('The workflow %s could not handle the part %s', $this->input, $part->input));
     }
 }

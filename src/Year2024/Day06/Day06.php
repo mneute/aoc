@@ -34,7 +34,7 @@ final class Day06 extends AbstractPuzzle
 
         $pt1 = array_reduce(
             $this->map,
-            static fn (int $carry, array $line): int => $carry + count(array_filter($line, static fn (string $char) => 'X' === $char)),
+            static fn (int $carry, array $line): int => $carry + \count(array_filter($line, static fn (string $char) => 'X' === $char)),
             0
         );
 
@@ -81,7 +81,7 @@ final class Day06 extends AbstractPuzzle
 
         $this->lastThreeObstacles = [
             $newCoordinates,
-            ...array_slice($this->lastThreeObstacles, 0, 2),
+            ...\array_slice($this->lastThreeObstacles, 0, 2),
         ];
 
         return false;
@@ -95,6 +95,7 @@ final class Day06 extends AbstractPuzzle
         $this->map[$this->coordinates[0]][$this->coordinates[1]] = 'X';
         if (!isset($this->map[$newCoordinates[0]][$newCoordinates[1]])) {
             $this->isInbounds = false;
+
             return;
         }
 
@@ -119,7 +120,7 @@ final class Day06 extends AbstractPuzzle
 
     private function canCreateInfiniteLoop(): bool
     {
-        if (3 !== count($this->lastThreeObstacles)) {
+        if (3 !== \count($this->lastThreeObstacles)) {
             return false;
         }
 

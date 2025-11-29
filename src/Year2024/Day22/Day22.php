@@ -21,15 +21,15 @@ final class Day22 extends AbstractPuzzle
         return new Result($pt1, 0);
     }
 
-
     /**
      * @param positive-int $secret
      * @param positive-int $iterations
+     *
      * @return positive-int
      */
     private function nextSecret(int $secret, int $iterations): int
     {
-        if ($iterations === 0) return $secret;
+        if (0 === $iterations) return $secret;
 
         $secret = ($secret ^ ($secret << 6)) % self::PRUNE; // $secret * 64
         $secret = ($secret ^ ($secret >> 5)) % self::PRUNE; // $secret / 32

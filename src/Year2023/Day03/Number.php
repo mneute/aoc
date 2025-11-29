@@ -6,10 +6,9 @@ namespace App\Year2023\Day03;
 
 final class Number
 {
-    private(set) string $number = '' {
+    public private(set) string $number = '' {
         get => $this->number;
     }
-
     public bool $valid = false {
         get => $this->valid;
         set => $this->valid = $value;

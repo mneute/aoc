@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use Castor\Attribute\AsContext;
 use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 use Castor\Context;
 use CommandBuilder\DockerCompose;
 use Symfony\Component\Console\Input\InputOption;
+
 use function Castor\import;
 use function Castor\run;
 
@@ -33,16 +36,41 @@ function runPuzzle(
     run(new DockerCompose()->puzzle($year, $day, $test));
 }
 
-#[AsTask(description: 'Runs rector')]
+#[AsTask(description: 'Runs quality assurance commands')]
+function runQa(): void
+{
+    rector(false);
+    phpCsFixer(false);
+}
+
+#[AsTask(description: 'Runs Rector')]
 function rector(
     #[AsOption(mode: InputOption::VALUE_NONE)]
-    bool $dryRun
+    bool $dryRun,
 ): void {
     $command = [
         'vendor/bin/rector',
         'process',
         '--config',
         'rector.php',
+    ];
+    if ($dryRun) $command[] = '--dry-run';
+
+    run(new DockerCompose()->command($command));
+}
+
+#[AsTask(description: 'Runs PhpCsFixer')]
+function phpCsFixer(
+    #[AsOption(mode: InputOption::VALUE_NONE)]
+    bool $dryRun,
+): void {
+    $command = [
+        'vendor/bin/php-cs-fixer',
+        'fix',
+        '--config',
+        'php-cs-fixer.php',
+        '--diff',
+        '--verbose',
     ];
     if ($dryRun) $command[] = '--dry-run';
 

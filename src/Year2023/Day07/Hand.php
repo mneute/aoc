@@ -21,18 +21,17 @@ final class Hand
         'T' => 'A',
     ];
     private const int ORD_J = 74;
-
-    private(set) Type $part1Type;
-    private(set) int $part1Weight;
-    private(set) Type $part2Type;
-    private(set) int $part2Weight;
+    public private(set) Type $part1Type;
+    public private(set) int $part1Weight;
+    public private(set) Type $part2Type;
+    public private(set) int $part2Weight;
 
     /** @var array<int, int> */
     private array $charsCount;
 
     public function __construct(
-        private(set) readonly string $input,
-        private(set) readonly int $bid,
+        public private(set) readonly string $input,
+        public private(set) readonly int $bid,
     ) {
         $this->part1Type = $this->getPart1Type();
         $this->part1Weight = $this->getWeight(self::CARDS_POINTS_PART_1);
@@ -46,7 +45,7 @@ final class Hand
      */
     private function getWeight(array $cardsPoints): int
     {
-        return intval(
+        return \intval(
             str_replace(
                 array_keys($cardsPoints),
                 array_values($cardsPoints),
@@ -60,19 +59,19 @@ final class Hand
     {
         $this->charsCount = count_chars($this->input, 1);
 
-        if (in_array(5, $this->charsCount, true)) {
+        if (\in_array(5, $this->charsCount, true)) {
             return Type::FIVE_OF_A_KIND;
         }
-        if (in_array(4, $this->charsCount, true)) {
+        if (\in_array(4, $this->charsCount, true)) {
             return Type::FOUR_OF_A_KIND;
         }
-        if (in_array(3, $this->charsCount, true)) {
-            return in_array(2, $this->charsCount, true)
+        if (\in_array(3, $this->charsCount, true)) {
+            return \in_array(2, $this->charsCount, true)
                 ? Type::FULL_HOUSE
                 : Type::THREE_OF_A_KIND;
         }
-        if (in_array(2, $this->charsCount, true)) {
-            return 3 === count($this->charsCount)
+        if (\in_array(2, $this->charsCount, true)) {
+            return 3 === \count($this->charsCount)
                 ? Type::TWO_PAIR
                 : Type::ONE_PAIR;
         }
@@ -84,7 +83,7 @@ final class Hand
     {
         $jokerCount = $this->charsCount[self::ORD_J] ?? 0;
 
-        if (in_array($jokerCount, [0, 5], true)) {
+        if (\in_array($jokerCount, [0, 5], true)) {
             return $this->part1Type;
         }
 

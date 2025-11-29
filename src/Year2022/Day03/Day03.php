@@ -20,8 +20,8 @@ final class Day03 extends AbstractPuzzle
         $currentGroup = [];
 
         foreach ($this->readFile() as $i => $line) {
-            $length = strlen($line);
-            if (0 !== $length % 2) throw new \RuntimeException(sprintf('Line %d has an odd number of characters', $i));
+            $length = \strlen($line);
+            if (0 !== $length % 2) throw new \RuntimeException(\sprintf('Line %d has an odd number of characters', $i));
 
             [$left, $right] = str_split($line, $length / 2);
 
@@ -29,7 +29,7 @@ final class Day03 extends AbstractPuzzle
             $uniqueRight = array_unique(str_split($right));
 
             $intersect = array_values(array_intersect($uniqueLeft, $uniqueRight));
-            if (1 !== count($intersect)) throw new \RuntimeException(sprintf('Line %d should have exactly one character in common for both parts', $i));
+            if (1 !== \count($intersect)) throw new \RuntimeException(\sprintf('Line %d should have exactly one character in common for both parts', $i));
 
             $priority = $this->getPriority($intersect[0]);
 
@@ -47,14 +47,15 @@ final class Day03 extends AbstractPuzzle
 
     private function getPriority(string $character): int
     {
-        $priority = ord($character);
+        $priority = \ord($character);
         if (self::UPPERCASE_A <= $priority && $priority <= self::UPPERCASE_Z) {
             $priority -= (self::UPPERCASE_A - 27);
         } elseif (self::LOWERCASE_A <= $priority && $priority <= self::LOWERCASE_Z) {
             $priority -= (self::LOWERCASE_A - 1);
         } else {
-            throw new \RuntimeException(sprintf('Unknown character %s', $character));
+            throw new \RuntimeException(\sprintf('Unknown character %s', $character));
         }
+
         return $priority;
     }
 
@@ -63,14 +64,14 @@ final class Day03 extends AbstractPuzzle
      */
     private function getGroupPriority(array $group): int
     {
-        if (3 !== count($group)) throw new \InvalidArgumentException('The group should have a size of 3 elements');
+        if (3 !== \count($group)) throw new \InvalidArgumentException('The group should have a size of 3 elements');
 
         $intersect = array_values(array_intersect(
             array_unique(str_split($group[0])),
             array_unique(str_split($group[1])),
             array_unique(str_split($group[2])),
         ));
-        if (1 !== count($intersect)) throw new \InvalidArgumentException(sprintf('The group "%s" should have exactly one character in common for all members', implode('", "', $group)));
+        if (1 !== \count($intersect)) throw new \InvalidArgumentException(\sprintf('The group "%s" should have exactly one character in common for all members', implode('", "', $group)));
 
         return $this->getPriority($intersect[0]);
     }

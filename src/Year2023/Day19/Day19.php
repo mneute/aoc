@@ -45,7 +45,7 @@ final class Day19 extends AbstractPuzzle
     {
         $status = 'in';
 
-        while (!in_array($status, ['A', 'R'], true)) {
+        while (!\in_array($status, ['A', 'R'], true)) {
             $status = $this->workflows[$status]->run($part);
         }
 

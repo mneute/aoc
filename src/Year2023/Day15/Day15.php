@@ -53,7 +53,7 @@ final class Day15 extends AbstractPuzzle
     {
         return array_reduce(
             str_split($input),
-            static fn (int $carry, string $char): int => ($carry + ord($char)) * 17 % 256,
+            static fn (int $carry, string $char): int => ($carry + \ord($char)) * 17 % 256,
             0
         );
     }

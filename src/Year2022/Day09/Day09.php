@@ -19,7 +19,7 @@ final class Day09 extends AbstractPuzzle
         foreach ($this->readFile() as $line) {
             [$direction, $count] = explode(' ', $line);
 
-            for ($i = 0; $i < (int) $count; $i++) {
+            for ($i = 0; $i < (int) $count; ++$i) {
                 [$x, $y] = $head1->move($direction);
                 if (!($tail1Positions[$x][$y] ?? false)) $tail1Positions[$x][$y] = true;
 
@@ -29,8 +29,8 @@ final class Day09 extends AbstractPuzzle
         }
 
         return new Result(
-            array_reduce($tail1Positions, fn (int $carry, array $array): int => $carry + count($array), 0),
-            array_reduce($tail2Positions, fn (int $carry, array $array): int => $carry + count($array), 0),
+            array_reduce($tail1Positions, fn (int $carry, array $array): int => $carry + \count($array), 0),
+            array_reduce($tail2Positions, fn (int $carry, array $array): int => $carry + \count($array), 0),
         );
     }
 }

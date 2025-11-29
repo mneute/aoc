@@ -10,7 +10,7 @@ final readonly class Group
         public int $start,
         public int $end,
     ) {
-        if ($this->start > $this->end) throw new \InvalidArgumentException(sprintf('Invalid group : %d-%d', $this->start, $this->end));
+        if ($this->start > $this->end) throw new \InvalidArgumentException(\sprintf('Invalid group : %d-%d', $this->start, $this->end));
     }
 
     public function contains(self $other): bool

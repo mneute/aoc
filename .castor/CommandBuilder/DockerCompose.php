@@ -17,6 +17,7 @@ final class DockerCompose implements CommandBuilderInterface
     public function container(string $name): self
     {
         $this->container = $name;
+
         return $this;
     }
 

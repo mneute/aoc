@@ -38,7 +38,7 @@ final class Day05 extends AbstractPuzzle
                 if (1 === preg_match('#\[(?<char>\w)]#', $part, $matches)) {
                     $char = $matches['char'];
 
-                    $index++;
+                    ++$index;
                     $stacks[$index] ??= [];
                     $stacks[$index] = [$char, ...$stacks[$index]];
                 }
@@ -52,7 +52,7 @@ final class Day05 extends AbstractPuzzle
             preg_match('#^move (?<count>\d+) from (?<source>\d+) to (?<dest>\d+)$#', $instruction, $matches);
             ['count' => $count, 'source' => $source, 'dest' => $dest] = $matches;
 
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 $box = array_pop($stacksPart1[(int) $source]);
                 $stacksPart1[(int) $dest][] = $box;
             }

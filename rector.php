@@ -9,7 +9,7 @@ return RectorConfig::configure()
         __DIR__ . '/src',
     ])
     ->withSkip([
-        __DIR__.'/.castor/.castor.stub.php'
+        __DIR__ . '/.castor/.castor.stub.php',
     ])
     ->withRootFiles()
     ->withPhpSets()

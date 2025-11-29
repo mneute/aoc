@@ -31,7 +31,7 @@ final class Day15 extends AbstractPuzzle
     {
         $hasReachedEmptyLine = false;
         foreach ($this->readFile() as $line) {
-            if ($line === '') {
+            if ('' === $line) {
                 $hasReachedEmptyLine = true;
                 continue;
             }
@@ -50,7 +50,7 @@ final class Day15 extends AbstractPuzzle
     {
         foreach ($this->map as $i => $line) {
             foreach ($line as $j => $char) {
-                if ($char === '@') {
+                if ('@' === $char) {
                     $this->robotCoordinates = [$i, $j];
 
                     return;
@@ -63,7 +63,7 @@ final class Day15 extends AbstractPuzzle
 
     private function getNextMove(): \Generator
     {
-        $strlen = strlen($this->moves);
+        $strlen = \strlen($this->moves);
         for ($i = 0; $i < $strlen; ++$i) {
             yield $this->moves[$i];
         }
@@ -96,7 +96,7 @@ final class Day15 extends AbstractPuzzle
             '>' => [$coordinates[0], $coordinates[1] + 1],
             '^' => [$coordinates[0] - 1, $coordinates[1]],
             'v' => [$coordinates[0] + 1, $coordinates[1]],
-            default => throw new \InvalidArgumentException(sprintf('Unknown move "%s"', $move)),
+            default => throw new \InvalidArgumentException(\sprintf('Unknown move "%s"', $move)),
         };
     }
 
@@ -105,7 +105,7 @@ final class Day15 extends AbstractPuzzle
         $total = 0;
         foreach ($this->map as $i => $line) {
             foreach ($line as $j => $char) {
-                if ($char !== 'O') {
+                if ('O' !== $char) {
                     continue;
                 }
 

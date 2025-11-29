@@ -34,7 +34,7 @@ final class Day07 extends AbstractPuzzle
      */
     private function isPossible(int $expectedResult, array $data, bool $pt2 = false): bool
     {
-        if (count($data) === 1) return $expectedResult === $data[0];
+        if (1 === \count($data)) return $expectedResult === $data[0];
 
         $n1 = array_shift($data);
         $n2 = array_shift($data);
@@ -43,6 +43,6 @@ final class Day07 extends AbstractPuzzle
 
         return $this->isPossible($expectedResult, [$n1 + $n2, ...$data], $pt2)
             || $this->isPossible($expectedResult, [$n1 * $n2, ...$data], $pt2)
-            || ($pt2 && $this->isPossible($expectedResult, [(int) ($n1.$n2), ...$data], $pt2));
+            || ($pt2 && $this->isPossible($expectedResult, [(int) ($n1 . $n2), ...$data], $pt2));
     }
 }

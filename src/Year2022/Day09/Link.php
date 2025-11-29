@@ -12,7 +12,6 @@ final class Link
         'D' => [1, 0],
         'L' => [0, -1],
     ];
-
     private int $x = 0;
     private int $y = 0;
     private ?self $child = null;
@@ -26,11 +25,12 @@ final class Link
 
     /**
      * Moves the link in the specified direction (U, R, D or L), moves the childrens towards the current chain link and returns the tail's position.
+     *
      * @return array{0: int, 1: int}
      */
     public function move(string $direction): array
     {
-        $movement = self::DIRECTIONS[$direction] ?? throw new \InvalidArgumentException(sprintf('Unknown direction : %s', $direction));
+        $movement = self::DIRECTIONS[$direction] ?? throw new \InvalidArgumentException(\sprintf('Unknown direction : %s', $direction));
 
         $this->x += $movement[0];
         $this->y += $movement[1];

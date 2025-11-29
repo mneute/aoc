@@ -10,14 +10,14 @@ final class Box implements \Stringable
     private array $lenses = [];
 
     public function __construct(
-        private(set) readonly int $id,
+        public private(set) readonly int $id,
     ) {
     }
 
     #[\Override]
     public function __toString(): string
     {
-        return sprintf('Box %02d : %s', $this->id, implode(' ', $this->lenses));
+        return \sprintf('Box %02d : %s', $this->id, implode(' ', $this->lenses));
     }
 
     public function addLens(string $label, int $focal): void
@@ -25,6 +25,7 @@ final class Box implements \Stringable
         $index = $this->getLensIndex($label);
         if (null === $index) {
             $this->lenses[] = new Lens($label, $focal);
+
             return;
         }
 

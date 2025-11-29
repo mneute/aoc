@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Year2023\Day04;
 
 use App\AbstractPuzzle;
@@ -22,7 +24,7 @@ final class Day04 extends AbstractPuzzle
             $winningNumbers = array_map(intval(...), explode(' ', (string) $winning));
             $drawnNumbers = array_map(intval(...), explode(' ', (string) $drawn));
 
-            $intersection = count(array_intersect($winningNumbers, $drawnNumbers));
+            $intersection = \count(array_intersect($winningNumbers, $drawnNumbers));
 
             if (0 !== $intersection) {
                 $pt1 += (2 ** ($intersection - 1));
