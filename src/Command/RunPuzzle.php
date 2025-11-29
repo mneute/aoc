@@ -31,7 +31,7 @@ final class RunPuzzle extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $year = $input->getArgument('year');
-        $day = str_pad($input->getArgument('day'), 2, '0', STR_PAD_LEFT);
+        $day = str_pad((string) $input->getArgument('day'), 2, '0', STR_PAD_LEFT);
         $test = $input->getOption('test');
 
         $className = sprintf('App\\Year%1$s\\Day%2$s\\Day%2$s', $year, $day);

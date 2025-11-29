@@ -13,7 +13,7 @@ final class Day07 extends AbstractPuzzle
     private const int DISK_SIZE = 70_000_000;
     private const int DESIRED_UNUSED_SPACE = 30_000_000;
 
-    private Directory $root;
+    private readonly Directory $root;
     private ?Directory $currentDir = null;
 
     public function __construct(bool $test)

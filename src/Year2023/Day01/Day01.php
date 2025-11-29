@@ -39,7 +39,7 @@ final class Day01 extends AbstractPuzzle
         $value = -1;
 
         foreach ($needles as $index => $needle) {
-            $pos = strpos($input, $needle);
+            $pos = strpos($input, (string) $needle);
             if (false === $pos) continue;
 
             if ($pos < $min) {
@@ -56,7 +56,7 @@ final class Day01 extends AbstractPuzzle
         $max = $value = -1;
 
         foreach ($needles as $index => $needle) {
-            $pos = strrpos($input, $needle);
+            $pos = strrpos($input, (string) $needle);
             if (false === $pos) continue;
 
             if ($pos > $max) {

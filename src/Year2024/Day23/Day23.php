@@ -31,7 +31,7 @@ final class Day23 extends AbstractPuzzle
                 if ($links[$b]->contains($c)) {
                     // $networks[] = [$a, $b, $c];
 
-                    if (str_starts_with($a, self::NEEDLE) || str_starts_with($b, self::NEEDLE) || str_starts_with($c, self::NEEDLE)) $pt1++;
+                    if (str_starts_with($a, self::NEEDLE) || str_starts_with($b, self::NEEDLE) || str_starts_with((string) $c, self::NEEDLE)) $pt1++;
                 }
             }
         }

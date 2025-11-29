@@ -14,13 +14,13 @@ import(__DIR__);
 #[AsTask(description: 'Build the docker image')]
 function build(): void
 {
-    run((new DockerCompose())->build());
+    run(new DockerCompose()->build());
 }
 
 #[AsTask(description: 'Starts a bash session inside the container', default: true)]
 function bash(): void
 {
-    run((new DockerCompose())->bash());
+    run(new DockerCompose()->bash());
 }
 
 #[AsTask(description: 'Runs a specific puzzle by year and day', aliases: ['run'])]
@@ -29,9 +29,24 @@ function runPuzzle(
     int $day,
     #[AsOption(shortcut: 't', mode: InputOption::VALUE_NONE)]
     bool $test,
-): void
-{
-    run((new DockerCompose())->puzzle($year, $day, $test));
+): void {
+    run(new DockerCompose()->puzzle($year, $day, $test));
+}
+
+#[AsTask(description: 'Runs rector')]
+function rector(
+    #[AsOption(mode: InputOption::VALUE_NONE)]
+    bool $dryRun
+): void {
+    $command = [
+        'vendor/bin/rector',
+        'process',
+        '--config',
+        'rector.php',
+    ];
+    if ($dryRun) $command[] = '--dry-run';
+
+    run(new DockerCompose()->command($command));
 }
 
 #[AsTask(description: 'Updates the permissions of the project dir', aliases: ['chown'])]

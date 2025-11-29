@@ -2,4 +2,5 @@
 **/.castor.stub.php
 /.env.local
 /.idea/
+/cache/
 /vendor/

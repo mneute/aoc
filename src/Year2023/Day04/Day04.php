@@ -19,8 +19,8 @@ final class Day04 extends AbstractPuzzle
             $winning = preg_replace('#\s{2,}#', ' ', trim($matches['winning']));
             $drawn = preg_replace('#\s{2,}#', ' ', trim($matches['drawn']));
 
-            $winningNumbers = array_map(intval(...), explode(' ', $winning));
-            $drawnNumbers = array_map(intval(...), explode(' ', $drawn));
+            $winningNumbers = array_map(intval(...), explode(' ', (string) $winning));
+            $drawnNumbers = array_map(intval(...), explode(' ', (string) $drawn));
 
             $intersection = count(array_intersect($winningNumbers, $drawnNumbers));
 

@@ -10,7 +10,7 @@ final class Monkey
 {
     private(set) readonly int $id;
     /** @var Queue<int> */
-    private Queue $items;
+    private readonly Queue $items;
     private readonly string $operation;
     private readonly int $modulo;
     private readonly int $nextIfTrue;

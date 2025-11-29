@@ -18,8 +18,9 @@
         "sort-packages": true
     },
     "require": {
-        "php": ">=8.4",
+        "php": "^8.4",
         "ext-ds": "*",
+        "rector/rector": "^2.2",
         "symfony/console": "^7.0",
         "symfony/dotenv": "^7.0",
         "symfony/http-client": "^7.0",
