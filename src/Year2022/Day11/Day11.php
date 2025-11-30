@@ -14,6 +14,8 @@ final class Day11 extends AbstractPuzzle
         $monkeys = [];
 
         $content = file_get_contents($this->getFilePath());
+        \assert(\is_string($content));
+
         foreach (explode("\n\n", $content) as $monkeyDefinition) {
             $monkey = new Monkey($monkeyDefinition);
             $monkeys[$monkey->id] = $monkey;

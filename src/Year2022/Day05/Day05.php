@@ -50,13 +50,15 @@ final class Day05 extends AbstractPuzzle
 
         foreach ($instructions as $instruction) {
             preg_match('#^move (?<count>\d+) from (?<source>\d+) to (?<dest>\d+)$#', $instruction, $matches);
+            \assert(\array_key_exists('count', $matches) && \array_key_exists('source', $matches) && \array_key_exists('dest', $matches));
+
             ['count' => $count, 'source' => $source, 'dest' => $dest] = $matches;
 
             for ($i = 0; $i < $count; ++$i) {
                 $box = array_pop($stacksPart1[(int) $source]);
                 $stacksPart1[(int) $dest][] = $box;
             }
-            $slice = array_splice($stacksPart2[(int) $source], -$count);
+            $slice = array_splice($stacksPart2[(int) $source], (int) -$count);
             $stacksPart2[(int) $dest] = [...$stacksPart2[(int) $dest], ...$slice];
         }
 

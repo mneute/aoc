@@ -12,7 +12,7 @@ final class Day05 extends AbstractPuzzle
     /** @var list<int> */
     private array $seeds;
 
-    /** @var list<Mapping> */
+    /** @var array<int, Mapping> */
     private array $mappings = [];
 
     public function run(): Result

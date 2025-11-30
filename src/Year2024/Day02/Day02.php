@@ -14,7 +14,7 @@ final class Day02 extends AbstractPuzzle
         $pt1 = $pt2 = 0;
 
         foreach ($this->readFile() as $line) {
-            $data = explode(' ', $line);
+            $data = array_map(intval(...), explode(' ', $line));
 
             if ($this->isSafe($data)) {
                 ++$pt1;
@@ -38,6 +38,9 @@ final class Day02 extends AbstractPuzzle
         return new Result($pt1, $pt2);
     }
 
+    /**
+     * @param list<int> $data
+     */
     private function isSafe(array $data): bool
     {
         $max = \count($data) - 2;

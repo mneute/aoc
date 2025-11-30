@@ -16,6 +16,10 @@ final readonly class Workflow
         $steps = [];
         foreach (explode(',', $this->input) as $step) {
             preg_match(self::REGEXP, $step, $matches);
+            \assert(\array_key_exists('outcome', $matches)
+                && \array_key_exists('limit', $matches)
+                && \array_key_exists('op', $matches));
+
             $outcome = $matches['outcome'];
 
             if ('' === ($matches['letter'] ?? '')) {

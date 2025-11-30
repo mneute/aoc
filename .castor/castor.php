@@ -41,6 +41,7 @@ function runQa(): void
 {
     rector(false);
     phpCsFixer(false);
+    phpstan();
 }
 
 #[AsTask(description: 'Runs Rector')]
@@ -51,8 +52,7 @@ function rector(
     $command = [
         'vendor/bin/rector',
         'process',
-        '--config',
-        'rector.php',
+        '--config=rector.php',
     ];
     if ($dryRun) $command[] = '--dry-run';
 
@@ -67,14 +67,24 @@ function phpCsFixer(
     $command = [
         'vendor/bin/php-cs-fixer',
         'fix',
-        '--config',
-        'php-cs-fixer.php',
+        '--config=php-cs-fixer.php',
         '--diff',
         '--verbose',
     ];
     if ($dryRun) $command[] = '--dry-run';
 
     run(new DockerCompose()->command($command));
+}
+
+#[AsTask(description: 'Runs PhpStan')]
+function phpstan(): void
+{
+    run(new DockerCompose()->command([
+        'vendor/bin/phpstan',
+        'analyse',
+        '--configuration=phpstan.neon',
+        '--memory-limit=-1',
+    ]));
 }
 
 #[AsTask(description: 'Updates the permissions of the project dir', aliases: ['chown'])]

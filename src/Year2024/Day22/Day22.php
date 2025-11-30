@@ -15,6 +15,8 @@ final class Day22 extends AbstractPuzzle
     {
         $pt1 = 0;
         foreach ($this->readFile() as $line) {
+            \assert((int) $line >= 0);
+
             $pt1 += $this->nextSecret((int) $line, 2000);
         }
 
@@ -22,10 +24,10 @@ final class Day22 extends AbstractPuzzle
     }
 
     /**
-     * @param positive-int $secret
-     * @param positive-int $iterations
+     * @param int<0, max> $secret
+     * @param int<0, max> $iterations
      *
-     * @return positive-int
+     * @return int<0, max>
      */
     private function nextSecret(int $secret, int $iterations): int
     {
@@ -34,6 +36,8 @@ final class Day22 extends AbstractPuzzle
         $secret = ($secret ^ ($secret << 6)) % self::PRUNE; // $secret * 64
         $secret = ($secret ^ ($secret >> 5)) % self::PRUNE; // $secret / 32
         $secret = ($secret ^ ($secret << 11)) % self::PRUNE; // $secret * 2048
+
+        \assert($secret >= 0);
 
         return $this->nextSecret($secret, $iterations - 1);
     }

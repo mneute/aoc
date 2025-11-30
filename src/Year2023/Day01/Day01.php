@@ -33,6 +33,9 @@ final class Day01 extends AbstractPuzzle
         return new Result($pt1, $pt2);
     }
 
+    /**
+     * @param list<string> $needles
+     */
     private function getFirstOccurence(string $input, array $needles): int
     {
         $min = \PHP_INT_MAX;
@@ -51,6 +54,9 @@ final class Day01 extends AbstractPuzzle
         return $value;
     }
 
+    /**
+     * @param list<string> $needles
+     */
     private function getLastOccurence(string $input, array $needles): int
     {
         $max = $value = -1;

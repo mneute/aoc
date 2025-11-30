@@ -29,7 +29,7 @@ final class Day10 extends AbstractPuzzle
             }
 
             if ('addx' === $operation) {
-                $this->x += ((int) $parts[1] ?? throw new \RuntimeException(\sprintf('Missing value for addx operation : %s', $line)));
+                $this->x += ((int) $parts[1]);
             }
         }
 

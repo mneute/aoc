@@ -9,7 +9,10 @@ use App\Result;
 
 final class Day25 extends AbstractPuzzle
 {
+    /** @var array<int, array<int, int>> */
     private array $locks = [];
+
+    /** @var array<int, array<int, int>> */
     private array $keys = [];
 
     public function run(): Result

@@ -9,7 +9,10 @@ use App\Result;
 
 final class Day24 extends AbstractPuzzle
 {
+    /** @var array<string, int> */
     private array $knownStates = [];
+
+    /** @var array<string, string> */
     private array $logicGates = [];
 
     public function run(): Result
@@ -36,14 +39,11 @@ final class Day24 extends AbstractPuzzle
         $pt1 = array_map($this->evalLogicGate(...), array_keys($z), $z);
 
         return new Result(
-            bindec(implode('', $pt1)),
+            (int) bindec(implode('', $pt1)),
             0
         );
     }
 
-    /**
-     * @return int<0,1>
-     */
     private function evalLogicGate(string $wire, string $input): int
     {
         if (isset($this->knownStates[$wire])) return $this->knownStates[$wire];

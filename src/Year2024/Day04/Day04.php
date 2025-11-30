@@ -19,6 +19,8 @@ final class Day04 extends AbstractPuzzle
         'W' => [0, -1],
         'NW' => [-1, -1],
     ];
+
+    /** @var list<list<string>> */
     private static array $input;
     private static int $maxI;
     private static int $maxJ;

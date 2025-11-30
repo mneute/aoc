@@ -17,6 +17,7 @@ final class Day02 extends AbstractPuzzle
 
         foreach ($this->readFile() as $line) {
             preg_match(self::REGEX, $line, $matches);
+            \assert(\array_key_exists('theirs', $matches) && \array_key_exists('ours', $matches));
 
             $theirs = Shape::create($matches['theirs']);
             $ours = Shape::create($matches['ours']);

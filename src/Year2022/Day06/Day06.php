@@ -11,7 +11,7 @@ final class Day06 extends AbstractPuzzle
 {
     public function run(): Result
     {
-        $input = trim(file_get_contents($this->getFilePath()));
+        $input = trim((string) file_get_contents($this->getFilePath()));
 
         $pt1 = $this->getFirstMarker($input, 4);
         $pt2 = $this->getFirstMarker($input, 14);

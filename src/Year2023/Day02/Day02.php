@@ -21,6 +21,7 @@ final class Day02 extends AbstractPuzzle
             $minRed = $minGreen = $minBlue = 1;
 
             preg_match('#^Game (?<id>\d+): (?<input>.+)$#', $line, $gameMatches);
+            \assert(\array_key_exists('id', $gameMatches) && \array_key_exists('input', $gameMatches));
 
             $input = $gameMatches['input'];
             $id = (int) $gameMatches['id'];
@@ -30,6 +31,7 @@ final class Day02 extends AbstractPuzzle
                     $cubes = trim($cubes);
 
                     preg_match('#^(?<count>\d+) (?<color>red|blue|green)$#', $cubes, $cubeMatches);
+                    \assert(\array_key_exists('count', $cubeMatches) && \array_key_exists('color', $cubeMatches));
 
                     $count = (int) $cubeMatches['count'];
                     $color = $cubeMatches['color'];

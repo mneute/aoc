@@ -31,8 +31,14 @@ final class RunPuzzle extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $year = $input->getArgument('year');
-        $day = str_pad((string) $input->getArgument('day'), 2, '0', \STR_PAD_LEFT);
+        \assert(\is_string($year));
+
+        $day = $input->getArgument('day');
+        \assert(\is_string($day));
+        $day = str_pad($day, 2, '0', \STR_PAD_LEFT);
+
         $test = $input->getOption('test');
+        \assert(\is_bool($test));
 
         $className = \sprintf('App\\Year%1$s\\Day%2$s\\Day%2$s', $year, $day);
         if (!class_exists($className)) throw new \InvalidArgumentException(\sprintf('Class %s does not exist', $className));
@@ -70,6 +76,7 @@ final class RunPuzzle extends Command
     {
         $cookie = $_ENV['AOC_SESSION_ID']
             ?: throw new \RuntimeException('Missing session ID, set the AOC_SESSION_ID value in your .env.local file');
+        \assert(\is_string($cookie));
 
         $client = HttpClient::create([
             'headers' => ['Cookie' => \sprintf('session=%s', $cookie)],

@@ -9,9 +9,12 @@ use App\Result;
 
 final class Day15 extends AbstractPuzzle
 {
+    /** @var array<int, array<int, string>> */
     private array $map = [];
     private string $moves = '';
-    private array $robotCoordinates = [];
+
+    /** @var array{int, int} */
+    private array $robotCoordinates;
 
     public function run(): Result
     {
@@ -61,6 +64,9 @@ final class Day15 extends AbstractPuzzle
         throw new \RuntimeException('Unable to find the robot "@" on the map');
     }
 
+    /**
+     * @return \Generator<int, string>
+     */
     private function getNextMove(): \Generator
     {
         $strlen = \strlen($this->moves);
@@ -69,6 +75,10 @@ final class Day15 extends AbstractPuzzle
         }
     }
 
+    /**
+     * @param array{int, int} $curr
+     * @param array{int, int} $next
+     */
     private function moveItems(array $curr, array $next, string $move): void
     {
         if ('#' === $this->map[$next[0]][$next[1]]) {
@@ -89,6 +99,11 @@ final class Day15 extends AbstractPuzzle
         }
     }
 
+    /**
+     * @param array{int, int} $coordinates
+     *
+     * @return array{int, int}
+     */
     private function getNextCoordinates(array $coordinates, string $move): array
     {
         return match ($move) {

@@ -9,11 +9,15 @@ use App\Result;
 
 final class Day11 extends AbstractPuzzle
 {
+    /** @var array<string, int> */
     private array $cache = [];
 
     public function run(): Result
     {
-        $stones = array_map(intval(...), explode(' ', trim(file_get_contents($this->getFilePath()))));
+        $fileContent = file_get_contents($this->getFilePath());
+        \assert(\is_string($fileContent));
+
+        $stones = array_map(intval(...), explode(' ', trim($fileContent)));
 
         $pt1 = $pt2 = 0;
 
@@ -26,10 +30,7 @@ final class Day11 extends AbstractPuzzle
     }
 
     /**
-     * @param int<0, max> $stone
-     * @param int<0, max> $blinks
-     *
-     * @return int<0, max> how many stones would you get if you transformed \$stone \$blinks times
+     * @return int how many stones would you get if you transformed \$stone \$blinks times
      */
     private function blink(int $stone, int $blinks): int
     {
@@ -41,7 +42,10 @@ final class Day11 extends AbstractPuzzle
         if (0 === $stone) {
             $count = $this->blink(1, $blinks - 1);
         } elseif (0 === \strlen((string) $stone) % 2) {
-            [$left, $right] = str_split((string) $stone, \strlen((string) $stone) / 2);
+            $halfLength = \strlen((string) $stone) >> 1;
+            \assert($halfLength > 0);
+
+            [$left, $right] = str_split((string) $stone, $halfLength);
             $count = $this->blink((int) $left, $blinks - 1) + $this->blink((int) $right, $blinks - 1);
         } else {
             $count = $this->blink($stone * 2024, $blinks - 1);

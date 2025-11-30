@@ -60,8 +60,7 @@ final class DockerCompose implements CommandBuilderInterface
         $command = [
             'docker',
             'compose',
-            '-f',
-            'docker-compose.yml',
+            '--file=docker-compose.yml',
         ];
 
         if ($this->build) {

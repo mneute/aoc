@@ -24,7 +24,9 @@ final class Day13 extends AbstractPuzzle
             }
 
             $order = $this->isCorrectlyOrdered(
+                /* @phpstan-ignore argument.type */
                 $left,
+                /* @phpstan-ignore argument.type */
                 json_decode($line, true, flags: \JSON_THROW_ON_ERROR)
             );
             if (Order::CORRECT === $order) {

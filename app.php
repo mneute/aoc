@@ -17,5 +17,5 @@ $application = new Application('advent-of-code', '1.0.0');
 $application->add($command);
 
 $application
-        ->setDefaultCommand($command->getName(), true)
+        ->setDefaultCommand($command->getName() ?? 'aoc', true)
         ->run();

@@ -14,7 +14,7 @@ final class Day23 extends AbstractPuzzle
 
     public function run(): Result
     {
-        /** @var Set[] $links */
+        /** @var Set<string>[] $links */
         $links = [];
         // $networks = [];
         $pt1 = 0;

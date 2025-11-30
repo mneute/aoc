@@ -9,7 +9,10 @@ use App\Result;
 
 final class Day05 extends AbstractPuzzle
 {
+    /** @var array<int, array<int, int>> */
     private static array $pageOrderingRules = [];
+
+    /** @var list<list<int>> */
     private static array $requiredUpdates = [];
 
     public function run(): Result
@@ -92,6 +95,9 @@ final class Day05 extends AbstractPuzzle
         return true;
     }
 
+    /**
+     * @return list<int>
+     */
     private function mustBeAfter(int $pageNumber): array
     {
         $mustBeAfter = [];
@@ -112,7 +118,7 @@ final class Day05 extends AbstractPuzzle
     private function getMiddlePages(array $lists): array
     {
         return array_map(
-            static fn (array $list): int => $list[floor(\count($list) / 2)],
+            static fn (array $list): int => $list[(int) floor(\count($list) / 2)],
             $lists
         );
     }

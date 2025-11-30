@@ -4,20 +4,14 @@ declare(strict_types=1);
 
 namespace App\Year2023\Day15;
 
-final class Box implements \Stringable
+final class Box
 {
-    /** @var array<Lens> */
+    /** @var list<Lens> */
     private array $lenses = [];
 
     public function __construct(
         public private(set) readonly int $id,
     ) {
-    }
-
-    #[\Override]
-    public function __toString(): string
-    {
-        return \sprintf('Box %02d : %s', $this->id, implode(' ', $this->lenses));
     }
 
     public function addLens(string $label, int $focal): void

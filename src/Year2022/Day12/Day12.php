@@ -66,6 +66,7 @@ final class Day12 extends AbstractPuzzle
      */
     private function dijkstra(array $start, array $end): int
     {
+        /** @var Queue<array{array{int,int}, int}> $queue */
         $queue = new Queue();
         $queue->push([$start, 0]);
 

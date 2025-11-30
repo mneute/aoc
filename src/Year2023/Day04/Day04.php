@@ -17,6 +17,7 @@ final class Day04 extends AbstractPuzzle
 
         foreach ($this->readFile() as $line) {
             preg_match('#^Card\s+(?<id>\d+):(?<winning>(?: +\d+)+) \|(?<drawn>(?: +\d+)+)$#', $line, $matches);
+            \assert(\array_key_exists('winning', $matches) && \array_key_exists('drawn', $matches) && \array_key_exists('id', $matches));
 
             $winning = preg_replace('#\s{2,}#', ' ', trim($matches['winning']));
             $drawn = preg_replace('#\s{2,}#', ' ', trim($matches['drawn']));

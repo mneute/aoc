@@ -9,12 +9,16 @@ use App\Result;
 
 final class Day06 extends AbstractPuzzle
 {
+    /** @var array<int, array<int, string>> */
     private array $map = [];
     private Direction $direction = Direction::UP;
+
+    /** @var array{int, int} */
     private array $coordinates = [0, 0];
+
+    /** @var array<int, array{int, int}> */
     private array $lastThreeObstacles = [];
     private bool $isInbounds = true;
-    private int $possibleInfiniteLoops = 0;
 
     public function run(): Result
     {
@@ -25,10 +29,6 @@ final class Day06 extends AbstractPuzzle
                 $this->moveForward();
             } else {
                 $this->direction = $this->direction->next();
-
-                if ($this->canCreateInfiniteLoop()) {
-                    ++$this->possibleInfiniteLoops;
-                }
             }
         }
 
@@ -108,6 +108,9 @@ final class Day06 extends AbstractPuzzle
         };
     }
 
+    /**
+     * @param array{int, int} $coordinates
+     */
     private function getNextPosition(Direction $direction, array &$coordinates): void
     {
         match ($direction) {
@@ -116,25 +119,5 @@ final class Day06 extends AbstractPuzzle
             Direction::LEFT => $coordinates[1]--,
             Direction::RIGHT => $coordinates[1]++,
         };
-    }
-
-    private function canCreateInfiniteLoop(): bool
-    {
-        if (3 !== \count($this->lastThreeObstacles)) {
-            return false;
-        }
-
-        [$firstEncountered, $lastEncountered] = [$this->lastThreeObstacles[2], $this->lastThreeObstacles[0]];
-
-        $fourthObstacle = match ($this->direction) {
-            Direction::UP => [$firstEncountered[0] - 1, $lastEncountered[1] + 1],
-            Direction::DOWN => [$firstEncountered[0] + 1, $lastEncountered[1] - 1],
-            Direction::LEFT => [$lastEncountered[0] - 1, $firstEncountered[1] - 1],
-            Direction::RIGHT => [$lastEncountered[0] + 1, $firstEncountered[1] + 1],
-        };
-
-        // TODO Finish this ...
-
-        return false;
     }
 }

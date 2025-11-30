@@ -22,8 +22,10 @@ final class Day03 extends AbstractPuzzle
         foreach ($this->readFile() as $i => $line) {
             $length = \strlen($line);
             if (0 !== $length % 2) throw new \RuntimeException(\sprintf('Line %d has an odd number of characters', $i));
+            $halfLength = (int) ($length / 2);
+            \assert($halfLength > 0);
 
-            [$left, $right] = str_split($line, $length / 2);
+            [$left, $right] = str_split($line, $halfLength);
 
             $uniqueLeft = array_unique(str_split($left));
             $uniqueRight = array_unique(str_split($right));
@@ -60,7 +62,7 @@ final class Day03 extends AbstractPuzzle
     }
 
     /**
-     * @param list<string> $group
+     * @param non-empty-array<int<0, 2>, string> $group
      */
     private function getGroupPriority(array $group): int
     {

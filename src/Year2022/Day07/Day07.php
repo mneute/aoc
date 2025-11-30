@@ -44,16 +44,16 @@ final class Day07 extends AbstractPuzzle
     private function interpretCommand(string $line): void
     {
         $argv = explode(' ', substr($line, 2));
-        $command = $argv[0] ?? throw new \RuntimeException(\sprintf('Missing command for line "%s"', $line));
+        $command = $argv[0];
 
         if ('cd' === $command) {
             $dirname = $argv[1] ?? throw new \RuntimeException(\sprintf('Missing argument for command cd in line "%s"', $line));
             if ('/' === $dirname) {
                 $this->currentDir = $this->root;
             } elseif ('..' === $dirname) {
-                $this->currentDir = $this->currentDir->parent;
+                $this->currentDir = $this->currentDir?->parent;
             } else {
-                $this->currentDir = $this->currentDir->getDirectory($dirname);
+                $this->currentDir = $this->currentDir?->getDirectory($dirname);
             }
         } elseif ('ls' !== $command) {
             throw new \UnexpectedValueException(\sprintf('Unknown command "%s"', $line));
@@ -66,12 +66,12 @@ final class Day07 extends AbstractPuzzle
         if (2 !== \count($parts)) throw new \InvalidArgumentException(\sprintf('Invalid line "%s"', $line));
 
         if ('dir' === $parts[0]) {
-            $this->currentDir->addDirectory(new Directory($parts[1]));
+            $this->currentDir?->addDirectory(new Directory($parts[1]));
 
             return;
         }
 
-        $this->currentDir->addFile(new File($parts[1], (int) $parts[0]));
+        $this->currentDir?->addFile(new File($parts[1], (int) $parts[0]));
     }
 
     private function accumulateDirSizesSmallerThanThreshold(Directory $dir, int $currentSize = 0): int
