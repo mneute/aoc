@@ -7,3 +7,4 @@ services:
             dockerfile: ./php/Dockerfile
         volumes:
             - .:/srv/app
+            - /srv/app/cache

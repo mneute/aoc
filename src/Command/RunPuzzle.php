@@ -31,12 +31,18 @@ final class RunPuzzle extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $year = $input->getArgument('year');
-        $day = str_pad($input->getArgument('day'), 2, '0', STR_PAD_LEFT);
-        $test = $input->getOption('test');
+        \assert(\is_string($year));
 
-        $className = sprintf('App\\Year%1$s\\Day%2$s\\Day%2$s', $year, $day);
-        if (!class_exists($className)) throw new \InvalidArgumentException(sprintf('Class %s does not exist', $className));
-        if (!is_subclass_of($className, AbstractPuzzle::class)) throw new \LogicException(sprintf('%s should be an instance of %s', $className, AbstractPuzzle::class));
+        $day = $input->getArgument('day');
+        \assert(\is_string($day));
+        $day = str_pad($day, 2, '0', \STR_PAD_LEFT);
+
+        $test = $input->getOption('test');
+        \assert(\is_bool($test));
+
+        $className = \sprintf('App\\Year%1$s\\Day%2$s\\Day%2$s', $year, $day);
+        if (!class_exists($className)) throw new \InvalidArgumentException(\sprintf('Class %s does not exist', $className));
+        if (!is_subclass_of($className, AbstractPuzzle::class)) throw new \LogicException(\sprintf('%s should be an instance of %s', $className, AbstractPuzzle::class));
 
         $io = new SymfonyStyle($input, $output);
 
@@ -44,7 +50,7 @@ final class RunPuzzle extends Command
 
         if (!file_exists($instance->getFilePath())) {
             $io->writeln('Missing input file, trying to download it ...');
-            if ($test) throw new \RuntimeException(sprintf('There is no way to automatically retrieve the test input. Get it from the website and store it in %s', $instance->getFilePath()));
+            if ($test) throw new \RuntimeException(\sprintf('There is no way to automatically retrieve the test input. Get it from the website and store it in %s', $instance->getFilePath()));
 
             $this->downloadInputFile($instance->getFilePath(), (int) $year, (int) $day);
             $io->writeln('Done ! Resuming ...');
@@ -61,7 +67,7 @@ final class RunPuzzle extends Command
             ['Part 2' => $result->part2],
         );
 
-        $io->writeln(sprintf(' %d ms - %.2F MiB', $event->getDuration(), $event->getMemory() >> 20));
+        $io->writeln(\sprintf(' %d ms - %.2F MiB', $event->getDuration(), $event->getMemory() >> 20));
 
         return self::SUCCESS;
     }
@@ -70,12 +76,13 @@ final class RunPuzzle extends Command
     {
         $cookie = $_ENV['AOC_SESSION_ID']
             ?: throw new \RuntimeException('Missing session ID, set the AOC_SESSION_ID value in your .env.local file');
+        \assert(\is_string($cookie));
 
         $client = HttpClient::create([
-            'headers' => ['Cookie' => sprintf('session=%s', $cookie)]
+            'headers' => ['Cookie' => \sprintf('session=%s', $cookie)],
         ]);
 
-        $response = $client->request('GET', sprintf('https://adventofcode.com/%d/day/%d/input', $year, $day));
+        $response = $client->request('GET', \sprintf('https://adventofcode.com/%d/day/%d/input', $year, $day));
 
         file_put_contents($filePath, $response->getContent());
     }

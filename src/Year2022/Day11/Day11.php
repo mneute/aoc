@@ -14,12 +14,14 @@ final class Day11 extends AbstractPuzzle
         $monkeys = [];
 
         $content = file_get_contents($this->getFilePath());
+        \assert(\is_string($content));
+
         foreach (explode("\n\n", $content) as $monkeyDefinition) {
             $monkey = new Monkey($monkeyDefinition);
             $monkeys[$monkey->id] = $monkey;
         }
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 20; ++$i) {
             foreach ($monkeys as $monkey) {
                 foreach ($monkey->processItems() as $nextMonkey => $item) {
                     $monkeys[$nextMonkey]->addItem($item);

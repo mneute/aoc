@@ -16,7 +16,7 @@ enum Shape: int
             'A', 'X' => self::ROCK,
             'B', 'Y' => self::PAPER,
             'C', 'Z' => self::SCISSORS,
-            default => throw new \InvalidArgumentException(sprintf('Unknown value %s', $input)),
+            default => throw new \InvalidArgumentException(\sprintf('Unknown value %s', $input)),
         };
     }
 
@@ -34,7 +34,7 @@ enum Shape: int
                 self::PAPER => self::SCISSORS,
                 self::SCISSORS => self::ROCK,
             },
-            default => throw new \InvalidArgumentException(sprintf('Unknown value %s', $outcome)),
+            default => throw new \InvalidArgumentException(\sprintf('Unknown value %s', $outcome)),
         };
     }
 

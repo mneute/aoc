@@ -12,39 +12,44 @@ final class DockerCompose implements CommandBuilderInterface
     private bool $build = false;
     private bool $bash = false;
     private array $puzzle = [];
+    private array $command = [];
 
     public function container(string $name): self
     {
         $this->container = $name;
+
         return $this;
     }
 
     public function build(): self
     {
+        $this->reset();
         $this->build = true;
-
-        $this->bash = false;
-        $this->puzzle = [];
 
         return $this;
     }
 
     public function bash(): self
     {
+        $this->reset();
         $this->bash = true;
-
-        $this->build = false;
-        $this->puzzle = [];
 
         return $this;
     }
 
     public function puzzle(int $year, int $day, bool $test): self
     {
+        $this->reset();
         $this->puzzle = [$year, $day];
         if ($test) $this->puzzle[] = '--test';
 
-        $this->build = $this->bash = false;
+        return $this;
+    }
+
+    public function command(array $command): self
+    {
+        $this->reset();
+        $this->command = $command;
 
         return $this;
     }
@@ -55,8 +60,7 @@ final class DockerCompose implements CommandBuilderInterface
         $command = [
             'docker',
             'compose',
-            '-f',
-            'docker-compose.yml',
+            '--file=docker-compose.yml',
         ];
 
         if ($this->build) {
@@ -84,8 +88,22 @@ final class DockerCompose implements CommandBuilderInterface
                 'app.php',
                 ...$this->puzzle,
             ];
+        } elseif ([] !== $this->command) {
+            return [
+                ...$command,
+                'run',
+                '--rm',
+                $this->container,
+                ...$this->command,
+            ];
         }
 
-        throw new \RuntimeException('You need to call one of the run() or build() methods');
+        throw new \RuntimeException('You need to call one of the run(), build(), puzzle() or command() methods');
+    }
+
+    private function reset(): void
+    {
+        $this->build = $this->bash = false;
+        $this->puzzle = $this->command = [];
     }
 }

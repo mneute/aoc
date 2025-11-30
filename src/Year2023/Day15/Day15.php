@@ -26,6 +26,7 @@ final class Day15 extends AbstractPuzzle
             $pt1 += $this->hashInput($step);
 
             preg_match('#^(?<label>[a-z]+)(?<operation>[=-])(?<focal>\d+)?$#', $step, $matches);
+            \assert(\array_key_exists('label', $matches) && \array_key_exists('operation', $matches));
 
             $label = $matches['label'];
             $operation = $matches['operation'];
@@ -53,7 +54,7 @@ final class Day15 extends AbstractPuzzle
     {
         return array_reduce(
             str_split($input),
-            static fn (int $carry, string $char): int => ($carry + ord($char)) * 17 % 256,
+            static fn (int $carry, string $char): int => ($carry + \ord($char)) * 17 % 256,
             0
         );
     }

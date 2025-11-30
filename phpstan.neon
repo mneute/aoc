@@ -1,0 +1,14 @@
+includes:
+	- phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+    level: 9
+    paths:
+        - .
+    excludePaths:
+        - cache
+        - vendor
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    checkDynamicProperties: true
+    tmpDir: cache/phpstan

@@ -27,6 +27,8 @@ final class Day19 extends AbstractPuzzle
 
             if (!$hasMetEmptyLine) {
                 preg_match(self::WORKFLOWS, $line, $matches);
+                \assert(\array_key_exists('name', $matches) && \array_key_exists('detail', $matches));
+
                 $this->workflows[$matches['name']] = new Workflow($matches['detail']);
 
                 continue;
@@ -45,7 +47,7 @@ final class Day19 extends AbstractPuzzle
     {
         $status = 'in';
 
-        while (!in_array($status, ['A', 'R'], true)) {
+        while (!\in_array($status, ['A', 'R'], true)) {
             $status = $this->workflows[$status]->run($part);
         }
 

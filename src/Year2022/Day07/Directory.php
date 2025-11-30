@@ -6,14 +6,14 @@ namespace App\Year2022\Day07;
 
 final class Directory
 {
-    private(set) ?self $parent = null;
+    public private(set) ?self $parent = null;
     private int $size;
 
     /** @var array<string, self> */
-    private(set) array $directories = [];
+    public private(set) array $directories = [];
 
     /** @var array<string, File> */
-    private(set) array $files = [];
+    public private(set) array $files = [];
 
     public function __construct(
         public readonly string $name,
@@ -22,7 +22,7 @@ final class Directory
 
     public function addDirectory(self $directory): void
     {
-        if (isset($this->directories[$directory->name])) throw new \RuntimeException(sprintf('Dir %s already exists in %s', $directory->name, $this->name));
+        if (isset($this->directories[$directory->name])) throw new \RuntimeException(\sprintf('Dir %s already exists in %s', $directory->name, $this->name));
 
         $this->directories[$directory->name] = $directory;
         $directory->parent = $this;
@@ -30,14 +30,14 @@ final class Directory
 
     public function addFile(File $file): void
     {
-        if (isset($this->files[$file->name])) throw new \RuntimeException(sprintf('File %s already exists in %s', $file->name, $this->name));
+        if (isset($this->files[$file->name])) throw new \RuntimeException(\sprintf('File %s already exists in %s', $file->name, $this->name));
 
         $this->files[$file->name] = $file;
     }
 
     public function getDirectory(string $name): self
     {
-        return $this->directories[$name] ?? throw new \RuntimeException(sprintf('No dir %s found in %s', $name, $this->name));
+        return $this->directories[$name] ?? throw new \RuntimeException(\sprintf('No dir %s found in %s', $name, $this->name));
     }
 
     public function getSize(): int

@@ -20,9 +20,9 @@ abstract class AbstractPuzzle
         if (null === $path) {
             $reflector = new \ReflectionClass($this);
 
-            $path = sprintf(
+            $path = \sprintf(
                 '%s/%s',
-                dirname($reflector->getFileName()),
+                \dirname($reflector->getFileName() ?: throw new \RuntimeException('Couldn\'t retrieve the file name')),
                 $this->test ? 'input-test.txt' : 'input.txt'
             );
         }
@@ -31,12 +31,12 @@ abstract class AbstractPuzzle
     }
 
     /**
-     * @return \Generator<int, string> The key is the line number (0 indexed), the value is the line itself (line endings are trimed)
+     * @return \Generator<int<0, max>, string> The key is the line number (0 indexed), the value is the line itself (line endings are trimed)
      */
     protected function readFile(): \Generator
     {
-        $file = fopen($this->getFilePath(), 'rb')
-            ?: throw new \RuntimeException(sprintf('Cannot open file %s', $this->getFilePath()));
+        $file = fopen($this->getFilePath(), 'r')
+            ?: throw new \RuntimeException(\sprintf('Cannot open file %s', $this->getFilePath()));
 
         $i = 0;
         while (false !== ($line = fgets($file))) {

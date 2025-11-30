@@ -13,6 +13,7 @@ final class Day18 extends AbstractPuzzle
     private const int MAX_VALUE = 70;
     private const int MAX_FALLEN_BYTES = 1024;
 
+    /** @var array<int, array<int, string>> */
     private array $map = [];
 
     public function run(): Result
@@ -50,6 +51,7 @@ final class Day18 extends AbstractPuzzle
         $start = [0, 0];
         $end = [self::MAX_VALUE, self::MAX_VALUE];
 
+        /** @var Queue<array{array{int, int}, int}> $queue */
         $queue = new Queue();
         $queue->push([$start, 0]);
 
@@ -70,7 +72,7 @@ final class Day18 extends AbstractPuzzle
 
                 if ($x < 0 || $y < 0 || $x > self::MAX_VALUE || $y > self::MAX_VALUE) continue;
 
-                if ($this->map[$y][$x] === '#') continue;
+                if ('#' === $this->map[$y][$x]) continue;
 
                 $key = "$x-$y";
                 if ($visited[$key] ?? false) continue;

@@ -37,16 +37,18 @@ final class Day01 extends AbstractPuzzle
     {
         $this->pt1 = max($this->pt1, $current);
 
-        if (count($this->pt2) < 3) {
+        if (\count($this->pt2) < 3) {
             $this->pt2[] = $current;
             rsort($this->pt2);
+
             return;
         }
 
         foreach ($this->pt2 as $index => $item) {
             if ($item < $current) {
                 array_splice($this->pt2, $index, 0, $current);
-                $this->pt2 = array_slice($this->pt2, 0, 3);
+                $this->pt2 = \array_slice($this->pt2, 0, 3);
+
                 return;
             }
         }

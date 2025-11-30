@@ -17,6 +17,11 @@ final class Day04 extends AbstractPuzzle
 
         foreach ($this->readFile() as $line) {
             preg_match(self::REGEX, $line, $matches);
+            \assert(\array_key_exists('p11', $matches)
+                && \array_key_exists('p12', $matches)
+                && \array_key_exists('p21', $matches)
+                && \array_key_exists('p22', $matches));
+
             [
                 'p11' => $p1_1,
                 'p12' => $p1_2,
@@ -28,10 +33,10 @@ final class Day04 extends AbstractPuzzle
             $group2 = new Group((int) $p2_1, (int) $p2_2);
 
             if ($group1->contains($group2) || $group2->contains($group1)) {
-                $pt1++;
+                ++$pt1;
             }
             if ($group1->overlaps($group2)) {
-                $pt2++;
+                ++$pt2;
             }
         }
 

@@ -14,21 +14,21 @@ final class Day02 extends AbstractPuzzle
         $pt1 = $pt2 = 0;
 
         foreach ($this->readFile() as $line) {
-            $data = explode(' ', $line);
+            $data = array_map(intval(...), explode(' ', $line));
 
             if ($this->isSafe($data)) {
-                $pt1++;
-                $pt2++;
+                ++$pt1;
+                ++$pt2;
 
                 continue;
             }
 
-            foreach (range(0, count($data) - 1) as $i) {
+            foreach (range(0, \count($data) - 1) as $i) {
                 $copy = $data;
                 array_splice($copy, $i, 1);
 
                 if ($this->isSafe($copy)) {
-                    $pt2++;
+                    ++$pt2;
 
                     continue 2;
                 }
@@ -38,11 +38,14 @@ final class Day02 extends AbstractPuzzle
         return new Result($pt1, $pt2);
     }
 
+    /**
+     * @param list<int> $data
+     */
     private function isSafe(array $data): bool
     {
-        $max = count($data) - 2;
+        $max = \count($data) - 2;
         $steps = [];
-        for ($i = 0; $i <= $max; $i++) {
+        for ($i = 0; $i <= $max; ++$i) {
             $steps[] = $data[$i + 1] - $data[$i];
         }
 

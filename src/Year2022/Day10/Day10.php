@@ -20,8 +20,8 @@ final class Day10 extends AbstractPuzzle
             $operation = $parts[0];
 
             $cycles = ('noop' === $operation ? 1 : 2);
-            for ($i = 0; $i < $cycles; $i++) {
-                $this->cycle++;
+            for ($i = 0; $i < $cycles; ++$i) {
+                ++$this->cycle;
 
                 if (0 === ($this->cycle + 20) % 40) {
                     $pt1 += ($this->cycle * $this->x);
@@ -29,7 +29,7 @@ final class Day10 extends AbstractPuzzle
             }
 
             if ('addx' === $operation) {
-                $this->x += ((int) $parts[1] ?? throw new \RuntimeException(sprintf('Missing value for addx operation : %s', $line)));
+                $this->x += ((int) $parts[1]);
             }
         }
 

@@ -29,7 +29,7 @@ final class Day08 extends AbstractPuzzle
 
         foreach ($this->map as $i => $line) {
             foreach (array_keys($line) as $j) {
-                if ($this->isVisible($i, $j)) $pt1++;
+                if ($this->isVisible($i, $j)) ++$pt1;
                 $pt2 = max($pt2, $this->getScenicScore($i, $j));
             }
         }
@@ -79,7 +79,7 @@ final class Day08 extends AbstractPuzzle
     private function getTreesVisible(string $direction, int $treeSize, int $count, int $i, int $j): int
     {
         if (!isset($this->map[$i][$j])) return $count;
-        $count++;
+        ++$count;
         if ($treeSize <= $this->map[$i][$j]) return $count;
 
         return $this->getTreesVisible(

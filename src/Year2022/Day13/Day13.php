@@ -16,7 +16,7 @@ final class Day13 extends AbstractPuzzle
 
         foreach ($this->readFile() as $i => $line) {
             if (0 === ($modulo = $i % 3)) {
-                $pairId++;
+                ++$pairId;
                 $left = json_decode($line, true, flags: \JSON_THROW_ON_ERROR);
                 continue;
             } elseif (2 === $modulo) {
@@ -24,13 +24,15 @@ final class Day13 extends AbstractPuzzle
             }
 
             $order = $this->isCorrectlyOrdered(
+                /* @phpstan-ignore argument.type */
                 $left,
+                /* @phpstan-ignore argument.type */
                 json_decode($line, true, flags: \JSON_THROW_ON_ERROR)
             );
             if (Order::CORRECT === $order) {
                 $pt1 += $pairId;
             } elseif (Order::NOT_ENOUGH_INFO === $order) {
-                throw new \RuntimeException(sprintf('Pair %d cannot be sorted', $pairId));
+                throw new \RuntimeException(\sprintf('Pair %d cannot be sorted', $pairId));
             }
         }
 
@@ -48,7 +50,7 @@ final class Day13 extends AbstractPuzzle
 
             if (null === $rightItem) return Order::INCORRECT;
 
-            if (is_int($leftItem) && is_int($rightItem)) {
+            if (\is_int($leftItem) && \is_int($rightItem)) {
                 if ($leftItem === $rightItem) continue;
 
                 return $leftItem < $rightItem
@@ -58,12 +60,12 @@ final class Day13 extends AbstractPuzzle
 
             // One of the parameters (or both) is an array
             $res = $this->isCorrectlyOrdered((array) $leftItem, (array) $rightItem);
-            if ($res === Order::NOT_ENOUGH_INFO) continue;
+            if (Order::NOT_ENOUGH_INFO === $res) continue;
 
             return $res;
         }
 
-        return count($left) === count($right)
+        return \count($left) === \count($right)
             ? Order::NOT_ENOUGH_INFO
             : Order::CORRECT;
     }

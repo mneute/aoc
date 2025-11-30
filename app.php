@@ -1,5 +1,7 @@
 #!/usr/bin/env php
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 require './vendor/autoload.php';
 
@@ -15,5 +17,5 @@ $application = new Application('advent-of-code', '1.0.0');
 $application->add($command);
 
 $application
-        ->setDefaultCommand($command->getName(), true)
+        ->setDefaultCommand($command->getName() ?? 'aoc', true)
         ->run();

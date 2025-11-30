@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Year2023\Day04;
 
 use App\AbstractPuzzle;
@@ -15,14 +17,15 @@ final class Day04 extends AbstractPuzzle
 
         foreach ($this->readFile() as $line) {
             preg_match('#^Card\s+(?<id>\d+):(?<winning>(?: +\d+)+) \|(?<drawn>(?: +\d+)+)$#', $line, $matches);
+            \assert(\array_key_exists('winning', $matches) && \array_key_exists('drawn', $matches) && \array_key_exists('id', $matches));
 
             $winning = preg_replace('#\s{2,}#', ' ', trim($matches['winning']));
             $drawn = preg_replace('#\s{2,}#', ' ', trim($matches['drawn']));
 
-            $winningNumbers = array_map(intval(...), explode(' ', $winning));
-            $drawnNumbers = array_map(intval(...), explode(' ', $drawn));
+            $winningNumbers = array_map(intval(...), explode(' ', (string) $winning));
+            $drawnNumbers = array_map(intval(...), explode(' ', (string) $drawn));
 
-            $intersection = count(array_intersect($winningNumbers, $drawnNumbers));
+            $intersection = \count(array_intersect($winningNumbers, $drawnNumbers));
 
             if (0 !== $intersection) {
                 $pt1 += (2 ** ($intersection - 1));

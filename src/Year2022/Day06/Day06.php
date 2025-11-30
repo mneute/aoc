@@ -11,7 +11,7 @@ final class Day06 extends AbstractPuzzle
 {
     public function run(): Result
     {
-        $input = trim(file_get_contents($this->getFilePath()));
+        $input = trim((string) file_get_contents($this->getFilePath()));
 
         $pt1 = $this->getFirstMarker($input, 4);
         $pt2 = $this->getFirstMarker($input, 14);
@@ -21,12 +21,12 @@ final class Day06 extends AbstractPuzzle
 
     private function getFirstMarker(string $input, int $chunkSize): int
     {
-        $length = strlen($input);
+        $length = \strlen($input);
 
-        for ($i = 0; $i < $length - $chunkSize; $i++) {
+        for ($i = 0; $i < $length - $chunkSize; ++$i) {
             $chunk = substr($input, $i, $chunkSize);
 
-            if ($chunkSize === count(array_unique(str_split($chunk)))) {
+            if ($chunkSize === \count(array_unique(str_split($chunk)))) {
                 return $i + $chunkSize;
             }
         }

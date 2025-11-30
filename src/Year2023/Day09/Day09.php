@@ -28,7 +28,7 @@ final class Day09 extends AbstractPuzzle
      */
     private function getNextValue(array $numbers): int
     {
-        $end = count($numbers) - 1;
+        $end = \count($numbers) - 1;
 
         $ecarts = $this->getEcarts($numbers);
 
@@ -60,9 +60,9 @@ final class Day09 extends AbstractPuzzle
      */
     private function getEcarts(array $numbers): array
     {
-        $end = count($numbers) - 1;
+        $end = \count($numbers) - 1;
         $ecarts = [];
-        for ($i = 1; $i <= $end; $i++) {
+        for ($i = 1; $i <= $end; ++$i) {
             $ecarts[] = $numbers[$i] - $numbers[$i - 1];
         }
 

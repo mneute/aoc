@@ -19,6 +19,8 @@ final class Day04 extends AbstractPuzzle
         'W' => [0, -1],
         'NW' => [-1, -1],
     ];
+
+    /** @var list<list<string>> */
     private static array $input;
     private static int $maxI;
     private static int $maxJ;
@@ -30,8 +32,8 @@ final class Day04 extends AbstractPuzzle
         foreach ($this->readFile() as $line) {
             self::$input[] = str_split($line);
         }
-        self::$maxI = count(self::$input);
-        self::$maxJ = count(self::$input[0]);
+        self::$maxI = \count(self::$input);
+        self::$maxJ = \count(self::$input[0]);
 
         foreach (self::$input as $i => $line) {
             foreach ($line as $j => $char) {
@@ -58,7 +60,7 @@ final class Day04 extends AbstractPuzzle
 
             if ($end[0] < 0 || $end[0] >= self::$maxI || $end[1] < 0 || $end[1] >= self::$maxJ) continue;
 
-            if ($this->tryDirectionPart1($i, $j, $direction)) $count++;
+            if ($this->tryDirectionPart1($i, $j, $direction)) ++$count;
         }
 
         return $count;

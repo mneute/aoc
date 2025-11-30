@@ -9,9 +9,12 @@ use App\Result;
 
 final class Day15 extends AbstractPuzzle
 {
+    /** @var array<int, array<int, string>> */
     private array $map = [];
     private string $moves = '';
-    private array $robotCoordinates = [];
+
+    /** @var array{int, int} */
+    private array $robotCoordinates;
 
     public function run(): Result
     {
@@ -31,7 +34,7 @@ final class Day15 extends AbstractPuzzle
     {
         $hasReachedEmptyLine = false;
         foreach ($this->readFile() as $line) {
-            if ($line === '') {
+            if ('' === $line) {
                 $hasReachedEmptyLine = true;
                 continue;
             }
@@ -50,7 +53,7 @@ final class Day15 extends AbstractPuzzle
     {
         foreach ($this->map as $i => $line) {
             foreach ($line as $j => $char) {
-                if ($char === '@') {
+                if ('@' === $char) {
                     $this->robotCoordinates = [$i, $j];
 
                     return;
@@ -61,14 +64,21 @@ final class Day15 extends AbstractPuzzle
         throw new \RuntimeException('Unable to find the robot "@" on the map');
     }
 
+    /**
+     * @return \Generator<int, string>
+     */
     private function getNextMove(): \Generator
     {
-        $strlen = strlen($this->moves);
+        $strlen = \strlen($this->moves);
         for ($i = 0; $i < $strlen; ++$i) {
             yield $this->moves[$i];
         }
     }
 
+    /**
+     * @param array{int, int} $curr
+     * @param array{int, int} $next
+     */
     private function moveItems(array $curr, array $next, string $move): void
     {
         if ('#' === $this->map[$next[0]][$next[1]]) {
@@ -89,6 +99,11 @@ final class Day15 extends AbstractPuzzle
         }
     }
 
+    /**
+     * @param array{int, int} $coordinates
+     *
+     * @return array{int, int}
+     */
     private function getNextCoordinates(array $coordinates, string $move): array
     {
         return match ($move) {
@@ -96,7 +111,7 @@ final class Day15 extends AbstractPuzzle
             '>' => [$coordinates[0], $coordinates[1] + 1],
             '^' => [$coordinates[0] - 1, $coordinates[1]],
             'v' => [$coordinates[0] + 1, $coordinates[1]],
-            default => throw new \InvalidArgumentException(sprintf('Unknown move "%s"', $move)),
+            default => throw new \InvalidArgumentException(\sprintf('Unknown move "%s"', $move)),
         };
     }
 
@@ -105,7 +120,7 @@ final class Day15 extends AbstractPuzzle
         $total = 0;
         foreach ($this->map as $i => $line) {
             foreach ($line as $j => $char) {
-                if ($char !== 'O') {
+                if ('O' !== $char) {
                     continue;
                 }
 

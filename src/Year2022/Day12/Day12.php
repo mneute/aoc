@@ -38,16 +38,16 @@ final class Day12 extends AbstractPuzzle
             $offset = 0;
             while (false !== ($offset = strpos($line, 'a', $offset))) {
                 $part2Starts[] = [$i, $offset];
-                $offset++;
+                ++$offset;
             }
         }
-        assert(is_array($part1Start), 'No starting point found for part 1');
-        assert(is_array($end), 'No ending point found');
-        assert(1 <= count($part2Starts), 'No starting point found for part 2');
+        \assert(\is_array($part1Start), 'No starting point found for part 1');
+        \assert(\is_array($end), 'No ending point found');
+        \assert(1 <= \count($part2Starts), 'No starting point found for part 2');
 
         $part1 = $this->dijkstra($part1Start, $end);
 
-        $part2 = PHP_INT_MAX;
+        $part2 = \PHP_INT_MAX;
         foreach ($part2Starts as $part2Start) {
             $shortestPath = $this->dijkstra($part2Start, $end);
             if (-1 === $shortestPath) continue;
@@ -66,6 +66,7 @@ final class Day12 extends AbstractPuzzle
      */
     private function dijkstra(array $start, array $end): int
     {
+        /** @var Queue<array{array{int,int}, int}> $queue */
         $queue = new Queue();
         $queue->push([$start, 0]);
 
@@ -98,6 +99,6 @@ final class Day12 extends AbstractPuzzle
     {
         static $cache = [];
 
-        return $cache[$char] ??= (ord(str_replace(['S', 'E'], ['a', 'z'], $char)) - 96);
+        return $cache[$char] ??= (\ord(str_replace(['S', 'E'], ['a', 'z'], $char)) - 96);
     }
 }

@@ -19,13 +19,13 @@ final class Day01 extends AbstractPuzzle
         foreach ($this->readFile() as $line) {
             $firstNumberPt1 = $this->getFirstOccurence($line, $pt1Chars);
             $lastNumberPt1 = $this->getLastOccurence($line, $pt1Chars);
-            $numberPt1 = (int) ($firstNumberPt1.$lastNumberPt1);
+            $numberPt1 = (int) ($firstNumberPt1 . $lastNumberPt1);
 
             $pt1 += $numberPt1;
 
             $firstNumberPt2 = $this->getFirstOccurence($line, $pt2Chars);
             $lastNumberPt2 = $this->getLastOccurence($line, $pt2Chars);
-            $numberPt2 = (int) ($firstNumberPt2.$lastNumberPt2);
+            $numberPt2 = (int) ($firstNumberPt2 . $lastNumberPt2);
 
             $pt2 += $numberPt2;
         }
@@ -33,13 +33,16 @@ final class Day01 extends AbstractPuzzle
         return new Result($pt1, $pt2);
     }
 
+    /**
+     * @param list<string> $needles
+     */
     private function getFirstOccurence(string $input, array $needles): int
     {
-        $min = PHP_INT_MAX;
+        $min = \PHP_INT_MAX;
         $value = -1;
 
         foreach ($needles as $index => $needle) {
-            $pos = strpos($input, $needle);
+            $pos = strpos($input, (string) $needle);
             if (false === $pos) continue;
 
             if ($pos < $min) {
@@ -51,12 +54,15 @@ final class Day01 extends AbstractPuzzle
         return $value;
     }
 
+    /**
+     * @param list<string> $needles
+     */
     private function getLastOccurence(string $input, array $needles): int
     {
         $max = $value = -1;
 
         foreach ($needles as $index => $needle) {
-            $pos = strrpos($input, $needle);
+            $pos = strrpos($input, (string) $needle);
             if (false === $pos) continue;
 
             if ($pos > $max) {

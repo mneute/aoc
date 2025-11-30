@@ -9,7 +9,10 @@ use App\Result;
 
 final class Day25 extends AbstractPuzzle
 {
+    /** @var array<int, array<int, int>> */
     private array $locks = [];
+
+    /** @var array<int, array<int, int>> */
     private array $keys = [];
 
     public function run(): Result
@@ -19,7 +22,7 @@ final class Day25 extends AbstractPuzzle
         $pt1 = 0;
         foreach ($this->locks as $lock) {
             foreach ($this->keys as $key) {
-                if (array_all(range(0, 4), static fn (int $column): bool => $lock[$column] + $key[$column] <= 5)) $pt1++;
+                if (array_all(range(0, 4), static fn (int $column): bool => $lock[$column] + $key[$column] <= 5)) ++$pt1;
             }
         }
 
@@ -43,17 +46,17 @@ final class Day25 extends AbstractPuzzle
 
                 continue;
             }
-            if (in_array($i % 8, [6, 7], true)) continue;
+            if (\in_array($i % 8, [6, 7], true)) continue;
 
-            if ($type === Type::KEY) {
-                $row = count($this->keys) - 1;
+            if (Type::KEY === $type) {
+                $row = \count($this->keys) - 1;
                 foreach (str_split($line) as $column => $char) {
-                    $this->keys[$row][$column] += $char === '#' ? 1 : 0;
+                    $this->keys[$row][$column] += '#' === $char ? 1 : 0;
                 }
             } else {
-                $row = count($this->locks) - 1;
+                $row = \count($this->locks) - 1;
                 foreach (str_split($line) as $column => $char) {
-                    $this->locks[$row][$column] += $char === '#' ? 1 : 0;
+                    $this->locks[$row][$column] += '#' === $char ? 1 : 0;
                 }
             }
         }

@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use Castor\Attribute\AsContext;
 use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 use Castor\Context;
 use CommandBuilder\DockerCompose;
 use Symfony\Component\Console\Input\InputOption;
+
 use function Castor\import;
 use function Castor\run;
 
@@ -14,13 +17,13 @@ import(__DIR__);
 #[AsTask(description: 'Build the docker image')]
 function build(): void
 {
-    run((new DockerCompose())->build());
+    run(new DockerCompose()->build());
 }
 
 #[AsTask(description: 'Starts a bash session inside the container', default: true)]
 function bash(): void
 {
-    run((new DockerCompose())->bash());
+    run(new DockerCompose()->bash());
 }
 
 #[AsTask(description: 'Runs a specific puzzle by year and day', aliases: ['run'])]
@@ -29,9 +32,59 @@ function runPuzzle(
     int $day,
     #[AsOption(shortcut: 't', mode: InputOption::VALUE_NONE)]
     bool $test,
-): void
+): void {
+    run(new DockerCompose()->puzzle($year, $day, $test));
+}
+
+#[AsTask(description: 'Runs quality assurance commands')]
+function runQa(): void
 {
-    run((new DockerCompose())->puzzle($year, $day, $test));
+    rector(false);
+    phpCsFixer(false);
+    phpstan();
+}
+
+#[AsTask(description: 'Runs Rector')]
+function rector(
+    #[AsOption(mode: InputOption::VALUE_NONE)]
+    bool $dryRun,
+): void {
+    $command = [
+        'vendor/bin/rector',
+        'process',
+        '--config=rector.php',
+    ];
+    if ($dryRun) $command[] = '--dry-run';
+
+    run(new DockerCompose()->command($command));
+}
+
+#[AsTask(description: 'Runs PhpCsFixer')]
+function phpCsFixer(
+    #[AsOption(mode: InputOption::VALUE_NONE)]
+    bool $dryRun,
+): void {
+    $command = [
+        'vendor/bin/php-cs-fixer',
+        'fix',
+        '--config=php-cs-fixer.php',
+        '--diff',
+        '--verbose',
+    ];
+    if ($dryRun) $command[] = '--dry-run';
+
+    run(new DockerCompose()->command($command));
+}
+
+#[AsTask(description: 'Runs PhpStan')]
+function phpstan(): void
+{
+    run(new DockerCompose()->command([
+        'vendor/bin/phpstan',
+        'analyse',
+        '--configuration=phpstan.neon',
+        '--memory-limit=-1',
+    ]));
 }
 
 #[AsTask(description: 'Updates the permissions of the project dir', aliases: ['chown'])]

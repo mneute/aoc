@@ -9,7 +9,10 @@ use App\Result;
 
 final class Day05 extends AbstractPuzzle
 {
+    /** @var array<int, array<int, int>> */
     private static array $pageOrderingRules = [];
+
+    /** @var list<list<int>> */
     private static array $requiredUpdates = [];
 
     public function run(): Result
@@ -27,10 +30,10 @@ final class Day05 extends AbstractPuzzle
 
         foreach ($invalidUpdates as &$update) {
             usort($update, static function (int $a, int $b): int {
-                if (in_array($b, self::$pageOrderingRules[$a] ?? [], true)) {
+                if (\in_array($b, self::$pageOrderingRules[$a] ?? [], true)) {
                     return -1;
                 }
-                if (in_array($a, self::$pageOrderingRules[$b] ?? [], true)) {
+                if (\in_array($a, self::$pageOrderingRules[$b] ?? [], true)) {
                     return 1;
                 }
 
@@ -59,7 +62,7 @@ final class Day05 extends AbstractPuzzle
             if (!$hasMetEmtpyLine) {
                 [$key, $value] = array_map(intval(...), explode('|', $line));
 
-                if (!in_array($value, self::$pageOrderingRules[$key] ?? [], true)) {
+                if (!\in_array($value, self::$pageOrderingRules[$key] ?? [], true)) {
                     self::$pageOrderingRules[$key][] = $value;
                 }
             } else {
@@ -76,14 +79,14 @@ final class Day05 extends AbstractPuzzle
         foreach ($update as $index => $pageNumber) {
             $mustBeAfter = $this->mustBeAfter($pageNumber);
 
-            $lastIndex = count($update) - 1;
+            $lastIndex = \count($update) - 1;
 
             if ($index === $lastIndex) {
                 continue;
             }
 
             foreach (range($index + 1, $lastIndex) as $lookAfter) {
-                if (in_array($update[$lookAfter], $mustBeAfter, true)) {
+                if (\in_array($update[$lookAfter], $mustBeAfter, true)) {
                     return false;
                 }
             }
@@ -92,11 +95,14 @@ final class Day05 extends AbstractPuzzle
         return true;
     }
 
+    /**
+     * @return list<int>
+     */
     private function mustBeAfter(int $pageNumber): array
     {
         $mustBeAfter = [];
         foreach (self::$pageOrderingRules as $before => $afters) {
-            if (in_array($pageNumber, $afters, true)) {
+            if (\in_array($pageNumber, $afters, true)) {
                 $mustBeAfter[] = $before;
             }
         }
@@ -106,12 +112,13 @@ final class Day05 extends AbstractPuzzle
 
     /**
      * @param array<array<int>> $lists
+     *
      * @return array<int>
      */
     private function getMiddlePages(array $lists): array
     {
         return array_map(
-            static fn (array $list): int => $list[floor(count($list) / 2)],
+            static fn (array $list): int => $list[(int) floor(\count($list) / 2)],
             $lists
         );
     }
