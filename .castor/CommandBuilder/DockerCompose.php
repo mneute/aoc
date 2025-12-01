@@ -70,32 +70,32 @@ final class DockerCompose implements CommandBuilderInterface
                 '--pull',
                 $this->container,
             ];
-        } elseif ($this->bash) {
-            return [
+        } else {
+            $runCommand = [
                 ...$command,
                 'run',
                 '--rm',
                 $this->container,
-                '/bin/bash',
             ];
-        } elseif ([] !== $this->puzzle) {
-            return [
-                ...$command,
-                'run',
-                '--rm',
-                $this->container,
-                'php',
-                'app.php',
-                ...$this->puzzle,
-            ];
-        } elseif ([] !== $this->command) {
-            return [
-                ...$command,
-                'run',
-                '--rm',
-                $this->container,
-                ...$this->command,
-            ];
+
+            if ($this->bash) {
+                return [
+                    ...$runCommand,
+                    '/bin/bash',
+                ];
+            } elseif ([] !== $this->puzzle) {
+                return [
+                    ...$runCommand,
+                    'php',
+                    'app.php',
+                    ...$this->puzzle,
+                ];
+            } elseif ([] !== $this->command) {
+                return [
+                    ...$runCommand,
+                    ...$this->command,
+                ];
+            }
         }
 
         throw new \RuntimeException('You need to call one of the run(), build(), puzzle() or command() methods');

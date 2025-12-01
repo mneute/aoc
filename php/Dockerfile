@@ -12,7 +12,10 @@ RUN apt update; \
     apt install git zip -y; \
     git config --global --add safe.directory /srv/app;
 
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 COPY . /srv/app/
+COPY --chmod=755 php/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN composer install
+
+ENTRYPOINT ["entrypoint.sh"]
