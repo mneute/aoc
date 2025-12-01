@@ -49,7 +49,7 @@ final class Day03 extends AbstractPuzzle
 
     private function getPriority(string $character): int
     {
-        $priority = \ord($character);
+        $priority = \ord($character[0]);
         if (self::UPPERCASE_A <= $priority && $priority <= self::UPPERCASE_Z) {
             $priority -= (self::UPPERCASE_A - 27);
         } elseif (self::LOWERCASE_A <= $priority && $priority <= self::LOWERCASE_Z) {

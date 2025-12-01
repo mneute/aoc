@@ -34,7 +34,7 @@ final class Day06 extends AbstractPuzzle
 
         $pt1 = array_reduce(
             $this->map,
-            static fn (int $carry, array $line): int => $carry + \count(array_filter($line, static fn (string $char) => 'X' === $char)),
+            static fn (int $carry, array $line): int => $carry + \count(array_filter($line, static fn (string $char): bool => 'X' === $char)),
             0
         );
 

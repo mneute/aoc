@@ -99,6 +99,6 @@ final class Day12 extends AbstractPuzzle
     {
         static $cache = [];
 
-        return $cache[$char] ??= (\ord(str_replace(['S', 'E'], ['a', 'z'], $char)) - 96);
+        return $cache[$char] ??= (\ord(str_replace(['S', 'E'], ['a', 'z'], $char)[0]) - 96);
     }
 }

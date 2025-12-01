@@ -28,10 +28,9 @@ final class Day23 extends AbstractPuzzle
             foreach ($links[$a] as $c) {
                 if ($b === $c) continue;
 
-                if ($links[$b]->contains($c)) {
-                    // $networks[] = [$a, $b, $c];
-
-                    if (str_starts_with($a, self::NEEDLE) || str_starts_with($b, self::NEEDLE) || str_starts_with((string) $c, self::NEEDLE)) ++$pt1;
+                // $networks[] = [$a, $b, $c];
+                if ($links[$b]->contains($c) && (str_starts_with($a, self::NEEDLE) || str_starts_with($b, self::NEEDLE) || str_starts_with((string) $c, self::NEEDLE))) {
+                    ++$pt1;
                 }
             }
         }
