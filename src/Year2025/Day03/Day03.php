@@ -23,18 +23,21 @@ final class Day03 extends AbstractPuzzle
         return new Result($part1, $part2);
     }
 
+    /**
+     * @param positive-int $digits
+     */
     private function findBiggestNumber(string $input, int $digits): int
     {
         \assert(\strlen($input) >= $digits);
 
-        $result = '';
-        $offset = 0;
+        $result = $offset = 0;
         for ($currentChar = 1; $currentChar <= $digits; ++$currentChar) {
-            $haystack = substr($input, $offset, (-$digits + $currentChar) ?: null);
+            $power = $digits - $currentChar;
+            $haystack = substr($input, $offset, -$power ?: null);
 
             for ($i = 9; $i >= 1; --$i) {
                 if (\is_int($position = strpos($haystack, (string) $i))) {
-                    $result .= $haystack[$position];
+                    $result += $i * 10 ** $power;
                     $offset += $position + 1;
 
                     continue 2;
@@ -44,7 +47,7 @@ final class Day03 extends AbstractPuzzle
             throw new \RuntimeException('This should never happen');
         }
 
-        \assert(\strlen($result) === $digits);
+        \assert(10 ** ($digits - 1) <= $result && $result < 10 ** $digits);
 
         return (int) $result;
     }

@@ -39,8 +39,8 @@ abstract class AbstractPuzzle
             ?: throw new \RuntimeException(\sprintf('Cannot open file %s', $this->getFilePath()));
 
         $i = 0;
-        while (false !== ($line = fgets($file))) {
-            yield $i++ => trim($line, "\r\n");
+        while (\is_string($line = fgets($file))) {
+            yield $i++ => trim($line, \PHP_EOL);
         }
 
         fclose($file);
