@@ -32,37 +32,33 @@ final class Day04 extends AbstractPuzzle
             $this->map[] = str_split($line);
         }
 
-        $queue = $this->getAccessibleRolls();
-        $part1 = $part2 = $queue->count();
+        $part1 = $part2 = 0;
 
-        do {
-            $this->removeRolls($queue);
-
-            $queue = $this->getAccessibleRolls();
-            $part2 += $queue->count();
-        } while (0 !== $queue->count());
-
-        return new Result(
-            $part1,
-            $part2
-        );
-    }
-
-    /**
-     * @return Queue<array{int, int}>
-     */
-    private function getAccessibleRolls(): Queue
-    {
+        /** @var Queue<array{int, int}> $queue */
         $queue = new Queue();
+
         foreach ($this->map as $i => $line) {
             foreach ($line as $j => $char) {
-                if (self::ROLL_OF_PAPER === $char && $this->isAccessible($i, $j)) {
-                    $queue->push([$i, $j]);
-                }
+                if (self::ROLL_OF_PAPER !== $char || !$this->isAccessible($i, $j)) continue;
+
+                ++$part1;
+                $queue->push([$i, $j]);
+            }
+        }
+        foreach ($queue as [$i, $j]) {
+            if (self::ROLL_OF_PAPER !== $this->map[$i][$j] || !$this->isAccessible($i, $j)) continue;
+
+            $this->map[$i][$j] = '.';
+            ++$part2;
+
+            foreach (self::DIRECTIONS as [$stepI, $stepJ]) {
+                $i2 = $i + $stepI;
+                $j2 = $j + $stepJ;
+                if (self::ROLL_OF_PAPER === ($this->map[$i2][$j2] ?? null)) $queue->push([$i2, $j2]);
             }
         }
 
-        return $queue;
+        return new Result($part1, $part2);
     }
 
     private function isAccessible(int $i, int $j): bool
@@ -78,15 +74,5 @@ final class Day04 extends AbstractPuzzle
         }
 
         return true;
-    }
-
-    /**
-     * @param Queue<array{int, int}> $queue
-     */
-    private function removeRolls(Queue $queue): void
-    {
-        foreach ($queue as [$i, $j]) {
-            $this->map[$i][$j] = '.';
-        }
     }
 }
