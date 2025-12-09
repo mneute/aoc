@@ -7,7 +7,7 @@ namespace App;
 abstract class AbstractPuzzle
 {
     public function __construct(
-        private readonly bool $test,
+        protected readonly bool $test,
     ) {
     }
 

@@ -36,7 +36,7 @@ final class Day07 extends AbstractPuzzle
                 $char = $this->map[$i][$column];
 
                 if (self::SPLITTER !== $char) {
-                    $newBeams[] = $column;
+                    if (!\in_array($column, $newBeams, true)) $newBeams[] = $column;
                     continue;
                 }
 
