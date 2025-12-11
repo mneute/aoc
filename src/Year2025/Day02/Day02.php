@@ -18,44 +18,83 @@ final class Day02 extends AbstractPuzzle
         );
         $part1 = $part2 = 0;
 
-        foreach (explode(',', $content) as $range) {
-            [$start, $end] = array_map(intval(...), explode('-', $range));
+        foreach (explode(',', $content) as $rangeInput) {
+            $range = new Range($rangeInput);
 
-            for ($id = $start; $id <= $end; ++$id) {
-                if ($this->hasPatternRepeatedTwice($id)) {
-                    $part1 += $id;
-                    $part2 += $id;
-                    continue;
-                }
+            $part1 += $this->getSumInvalidIds($range);
 
-                if ($this->hasRepeatedPattern($id)) $part2 += $id;
-            }
+            // for ($id = $start; $id <= $end; ++$id) {
+            //     if ($this->hasPatternRepeatedTwice($id)) {
+            //         $part1 += $id;
+            //         $part2 += $id;
+            //         continue;
+            //     }
+            //
+            //     if ($this->hasRepeatedPattern($id)) $part2 += $id;
+            // }
         }
 
         return new Result($part1, $part2);
     }
 
-    private function hasPatternRepeatedTwice(int $input): bool
+    private function getSumInvalidIds(Range $range): int
     {
-        $length = \strlen((string) $input);
-        if (1 === $length % 2) return false;
+        $adjustedStart = $range->start;
+        $adjustedEnd = $range->end;
 
-        return (string) $input === str_repeat(substr((string) $input, 0, (int) ($length / 2)), 2);
-    }
+        $sLength = \strlen((string) $adjustedStart);
+        if (0 !== $sLength % 2) {
+            $adjustedStart = 10 ** $sLength;
+            ++$sLength;
+        }
+        $eLength = \strlen((string) $adjustedEnd);
+        if (0 !== $eLength % 2) {
+            --$eLength;
+            $adjustedEnd = (10 ** $eLength) - 1;
+        }
+        if ($adjustedStart > $adjustedEnd) return 0;
 
-    private function hasRepeatedPattern(int $input): bool
-    {
-        $stringInput = (string) $input;
-        $totalLength = \strlen($stringInput);
-        $halfLength = (int) round($totalLength / 2, mode: \RoundingMode::HalfTowardsZero);
+        $sum = 0;
+        $step = $this->getStep($sLength, 2);
 
-        for ($currentLength = 1; $currentLength <= $halfLength; ++$currentLength) {
-            if (0 !== $totalLength % $currentLength) continue;
-
-            $needle = substr($stringInput, 0, $currentLength);
-            if ($stringInput === str_repeat($needle, (int) ($totalLength / $currentLength))) return true;
+        $number = $this->getFirstMultipleOf($adjustedStart, $step);
+        while ($number <= $adjustedEnd) {
+            $sum += $number;
+            $number += $step;
         }
 
-        return false;
+        return $sum;
     }
+
+    private function getStep(int $length, int $countRepeatedPatterns): int
+    {
+        \assert(0 === $length % $countRepeatedPatterns);
+
+        $pattern = str_pad('1', $length / $countRepeatedPatterns, '0', \STR_PAD_LEFT);
+
+        return (int) str_repeat($pattern, $countRepeatedPatterns);
+    }
+
+    private function getFirstMultipleOf(int $number, int $modulo): int
+    {
+        return 0 === $number % $modulo
+            ? $number
+            : $number + ($modulo - ($number % $modulo));
+    }
+
+    // private function hasRepeatedPattern(int $input): bool
+    // {
+    //     $stringInput = (string) $input;
+    //     $totalLength = \strlen($stringInput);
+    //     $halfLength = (int) round($totalLength / 2, mode: \RoundingMode::HalfTowardsZero);
+    //
+    //     for ($currentLength = 1; $currentLength <= $halfLength; ++$currentLength) {
+    //         if (0 !== $totalLength % $currentLength) continue;
+    //
+    //         $needle = substr($stringInput, 0, $currentLength);
+    //         if ($stringInput === str_repeat($needle, (int) ($totalLength / $currentLength))) return true;
+    //     }
+    //
+    //     return false;
+    // }
 }
