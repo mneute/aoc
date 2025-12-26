@@ -21,24 +21,22 @@ final class Day04 extends AbstractPuzzle
     ];
 
     /** @var list<list<string>> */
-    private static array $input;
-    private static int $maxI;
-    private static int $maxJ;
+    private array $input;
 
     public function run(): Result
     {
         $pt1 = $pt2 = 0;
 
         foreach ($this->readFile() as $line) {
-            self::$input[] = str_split($line);
+            $this->input[] = str_split($line);
         }
-        self::$maxI = \count(self::$input);
-        self::$maxJ = \count(self::$input[0]);
 
-        foreach (self::$input as $i => $line) {
+        foreach ($this->input as $i => $line) {
             foreach ($line as $j => $char) {
                 if ('X' === $char) {
                     $pt1 += $this->tryPart1($i, $j);
+                } elseif ('A' === $char) {
+                    $pt2 += $this->tryPart2($i, $j);
                 }
             }
         }
@@ -48,39 +46,35 @@ final class Day04 extends AbstractPuzzle
 
     private function tryPart1(int $i, int $j): int
     {
-        $steps = 3;
         $count = 0;
 
         foreach (self::DIRECTIONS as $direction) {
-            // bounds check
-            $end = [
-                $i + ($direction[0] * $steps),
-                $j + ($direction[1] * $steps),
-            ];
+            [$i2, $j2] = [$i, $j];
+            foreach (['M', 'A', 'S'] as $letter) {
+                $i2 += $direction[0];
+                $j2 += $direction[1];
 
-            if ($end[0] < 0 || $end[0] >= self::$maxI || $end[1] < 0 || $end[1] >= self::$maxJ) continue;
+                if ($letter !== ($this->input[$i2][$j2] ?? null)) continue 2;
+            }
 
-            if ($this->tryDirectionPart1($i, $j, $direction)) ++$count;
+            ++$count;
         }
 
         return $count;
     }
 
-    /**
-     * @param array{0: int, 1: int} $steps
-     */
-    private function tryDirectionPart1(int $i, int $j, array $steps): bool
+    private function tryPart2(int $i, int $j): int
     {
-        $i += $steps[0];
-        $j += $steps[1];
+        $corners = '';
+        foreach (self::DIRECTIONS as $index => $direction) {
+            if (1 === \strlen($index)) continue;
 
-        foreach (['M', 'A', 'S'] as $letter) {
-            if ($letter !== self::$input[$i][$j]) return false;
+            $i2 = $i + $direction[0];
+            $j2 = $j + $direction[1];
 
-            $i += $steps[0];
-            $j += $steps[1];
+            $corners .= $this->input[$i2][$j2] ?? '.';
         }
 
-        return true;
+        return (int) \in_array($corners, ['MMSS', 'MSSM', 'SSMM', 'SMMS'], true);
     }
 }
