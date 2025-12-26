@@ -13,25 +13,33 @@ final class Day01 extends AbstractPuzzle
     {
         $pt1 = $pt2 = 0;
 
-        $column1 = [];
-        $column2 = [];
+        /** @var \SplMinHeap<int> $heap1 */
+        $heap1 = new \SplMinHeap();
+        /** @var \SplMinHeap<int> $heap2 */
+        $heap2 = new \SplMinHeap();
 
-        $cachePt2 = [];
+        $column2Count = [];
 
         foreach ($this->readFile() as $line) {
-            if (1 === preg_match('/^(\d+)\s+(\d+)$/', $line, $matches)) {
-                $column1[] = (int) $matches[1];
-                $column2[] = (int) $matches[2];
+            if (1 !== preg_match('/^(\d+) +(\d+)$/', $line, $matches)) {
+                throw new \RuntimeException(\sprintf('Invalid line : %s', $line));
             }
+
+            [1 => $a, 2 => $b] = $matches;
+
+            $heap1->insert((int) $a);
+            $heap2->insert((int) $b);
+            $column2Count[$b] ??= 0;
+            ++$column2Count[$b];
         }
 
-        sort($column1);
-        sort($column2);
+        $heap2->rewind();
+        foreach ($heap1 as $item1) {
+            $item2 = $heap2->current();
+            $heap2->next();
 
-        foreach (range(0, \count($column1) - 1) as $i) {
-            $pt1 += abs($column1[$i] - $column2[$i]);
-
-            $pt2 += ($cachePt2[$column1[$i]] ??= $column1[$i] * \count(array_filter($column2, static fn (int $j): bool => $column1[$i] === $j)));
+            $pt1 += abs($item1 - $item2);
+            $pt2 += $item1 * ($column2Count[$item1] ?? 0);
         }
 
         return new Result($pt1, $pt2);
