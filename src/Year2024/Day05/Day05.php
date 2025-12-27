@@ -10,17 +10,17 @@ use App\Result;
 final class Day05 extends AbstractPuzzle
 {
     /** @var array<int, array<int, int>> */
-    private static array $pageOrderingRules = [];
+    private array $pageOrderingRules = [];
 
     /** @var list<list<int>> */
-    private static array $requiredUpdates = [];
+    private array $requiredUpdates = [];
 
     public function run(): Result
     {
         $this->parseFile();
 
         $validUpdates = $invalidUpdates = [];
-        foreach (self::$requiredUpdates as $list) {
+        foreach ($this->requiredUpdates as $list) {
             if ($this->isValidUpdate($list)) {
                 $validUpdates[] = $list;
             } else {
@@ -29,11 +29,11 @@ final class Day05 extends AbstractPuzzle
         }
 
         foreach ($invalidUpdates as &$update) {
-            usort($update, static function (int $a, int $b): int {
-                if (\in_array($b, self::$pageOrderingRules[$a] ?? [], true)) {
+            usort($update, function (int $a, int $b): int {
+                if (\in_array($b, $this->pageOrderingRules[$a] ?? [], true)) {
                     return -1;
                 }
-                if (\in_array($a, self::$pageOrderingRules[$b] ?? [], true)) {
+                if (\in_array($a, $this->pageOrderingRules[$b] ?? [], true)) {
                     return 1;
                 }
 
@@ -62,11 +62,11 @@ final class Day05 extends AbstractPuzzle
             if (!$hasMetEmtpyLine) {
                 [$key, $value] = array_map(intval(...), explode('|', $line));
 
-                if (!\in_array($value, self::$pageOrderingRules[$key] ?? [], true)) {
-                    self::$pageOrderingRules[$key][] = $value;
+                if (!\in_array($value, $this->pageOrderingRules[$key] ?? [], true)) {
+                    $this->pageOrderingRules[$key][] = $value;
                 }
             } else {
-                self::$requiredUpdates[] = array_map(intval(...), explode(',', $line));
+                $this->requiredUpdates[] = array_map(intval(...), explode(',', $line));
             }
         }
     }
@@ -76,10 +76,10 @@ final class Day05 extends AbstractPuzzle
      */
     private function isValidUpdate(array $update): bool
     {
+        $lastIndex = \count($update) - 1;
+
         foreach ($update as $index => $pageNumber) {
             $mustBeAfter = $this->mustBeAfter($pageNumber);
-
-            $lastIndex = \count($update) - 1;
 
             if ($index === $lastIndex) {
                 continue;
@@ -101,7 +101,7 @@ final class Day05 extends AbstractPuzzle
     private function mustBeAfter(int $pageNumber): array
     {
         $mustBeAfter = [];
-        foreach (self::$pageOrderingRules as $before => $afters) {
+        foreach ($this->pageOrderingRules as $before => $afters) {
             if (\in_array($pageNumber, $afters, true)) {
                 $mustBeAfter[] = $before;
             }
