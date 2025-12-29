@@ -5,17 +5,11 @@ declare(strict_types=1);
 namespace App\Year2022\Day08;
 
 use App\AbstractPuzzle;
+use App\Constants\Directions;
 use App\Result;
 
 final class Day08 extends AbstractPuzzle
 {
-    private const array DIRECTIONS = [
-        'North' => [-1, 0],
-        'West' => [0, 1],
-        'South' => [1, 0],
-        'East' => [0, -1],
-    ];
-
     /** @var list<list<int>> */
     private array $map = [];
 
@@ -40,7 +34,7 @@ final class Day08 extends AbstractPuzzle
     private function isVisible(int $i, int $j): bool
     {
         $treeSize = $this->map[$i][$j];
-        foreach (self::DIRECTIONS as $direction) {
+        foreach (Directions::CARDINALS as $direction) {
             $newI = $i + $direction[0];
             $newJ = $j + $direction[1];
 
@@ -61,7 +55,7 @@ final class Day08 extends AbstractPuzzle
     private function getScenicScore(int $i, int $j): int
     {
         $score = 1;
-        foreach (self::DIRECTIONS as $name => $direction) {
+        foreach (Directions::CARDINALS as $name => $direction) {
             $score *= $this->getTreesVisible(
                 $name,
                 $this->map[$i][$j],
@@ -86,8 +80,8 @@ final class Day08 extends AbstractPuzzle
             $direction,
             $treeSize,
             $count,
-            $i + self::DIRECTIONS[$direction][0],
-            $j + self::DIRECTIONS[$direction][1],
+            $i + Directions::CARDINALS[$direction][0],
+            $j + Directions::CARDINALS[$direction][1],
         );
     }
 }

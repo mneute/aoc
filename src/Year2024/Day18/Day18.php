@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Year2024\Day18;
 
 use App\AbstractPuzzle;
+use App\Constants\Directions;
 use App\Result;
 use Ds\Queue;
 
@@ -55,19 +56,12 @@ final class Day18 extends AbstractPuzzle
         $queue = new Queue();
         $queue->push([$start, 0]);
 
-        $directions = [
-            [0, 1],  // v
-            [0, -1], // ^
-            [1, 0],  // >
-            [-1, 0], // <
-        ];
-
         $visited = [];
 
         foreach ($queue as [$position, $steps]) {
             if ($position === $end) return $steps;
 
-            foreach ($directions as $direction) {
+            foreach (Directions::CARDINALS as $direction) {
                 [$x, $y] = [$position[0] + $direction[0], $position[1] + $direction[1]];
 
                 if ($x < 0 || $y < 0 || $x > self::MAX_VALUE || $y > self::MAX_VALUE) continue;

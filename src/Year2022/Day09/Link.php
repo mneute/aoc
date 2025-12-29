@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\Year2022\Day09;
 
+use App\Constants\Directions;
+
 final class Link
 {
-    private const array DIRECTIONS = [
-        'U' => [-1, 0],
-        'R' => [0, 1],
-        'D' => [1, 0],
-        'L' => [0, -1],
-    ];
     private int $x = 0;
     private int $y = 0;
     private ?self $child = null;
@@ -30,7 +26,13 @@ final class Link
      */
     public function move(string $direction): array
     {
-        $movement = self::DIRECTIONS[$direction] ?? throw new \InvalidArgumentException(\sprintf('Unknown direction : %s', $direction));
+        $movement = match ($direction) {
+            'U' => Directions::NORTH,
+            'R' => Directions::EAST,
+            'D' => Directions::SOUTH,
+            'L' => Directions::WEST,
+            default => throw new \InvalidArgumentException(\sprintf('Unknown direction : %s', $direction)),
+        };
 
         $this->x += $movement[0];
         $this->y += $movement[1];

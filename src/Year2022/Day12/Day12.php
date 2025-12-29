@@ -5,18 +5,12 @@ declare(strict_types=1);
 namespace App\Year2022\Day12;
 
 use App\AbstractPuzzle;
+use App\Constants\Directions;
 use App\Result;
 use Ds\Queue;
 
 final class Day12 extends AbstractPuzzle
 {
-    private const array DIRECTIONS = [
-        'U' => [-1, 0],
-        'R' => [0, 1],
-        'D' => [1, 0],
-        'L' => [0, -1],
-    ];
-
     /** @var list<list<string>> */
     private array $map = [];
 
@@ -77,7 +71,7 @@ final class Day12 extends AbstractPuzzle
 
             $currentElevation = $this->elevation($this->map[$position[0]][$position[1]]);
 
-            foreach (self::DIRECTIONS as $direction) {
+            foreach (Directions::CARDINALS as $direction) {
                 [$x, $y] = [$position[0] + $direction[0], $position[1] + $direction[1]];
 
                 if (!isset($this->map[$x][$y])) continue;

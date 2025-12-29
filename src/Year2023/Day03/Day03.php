@@ -5,23 +5,11 @@ declare(strict_types=1);
 namespace App\Year2023\Day03;
 
 use App\AbstractPuzzle;
+use App\Constants\Directions;
 use App\Result;
 
 final class Day03 extends AbstractPuzzle
 {
-    // @formatter:off
-    private const array DIRECTIONS = [
-        'North' => [-1, 0],
-        'North-East' => [-1, 1],
-        'East' => [0, 1],
-        'South-East' => [1, 1],
-        'South' => [1, 0],
-        'South-West' => [1, -1],
-        'West' => [0, -1],
-        'North-West' => [-1, -1],
-    ];
-    // @formatter:on
-
     /**
      * @var list<list<string>>
      */
@@ -86,7 +74,7 @@ final class Day03 extends AbstractPuzzle
      */
     private function hasSymbolAround(array $coordinates): bool
     {
-        foreach (self::DIRECTIONS as $direction) {
+        foreach (Directions::ALL as $direction) {
             $i = $coordinates[0] + $direction[0];
             $j = $coordinates[1] + $direction[1];
 
@@ -109,7 +97,7 @@ final class Day03 extends AbstractPuzzle
         $alreadyVisited = [];
         $numbers = [];
 
-        foreach (self::DIRECTIONS as $direction) {
+        foreach (Directions::ALL as $direction) {
             $i = $coordinates[0] + $direction[0];
             $j = $coordinates[1] + $direction[1];
 

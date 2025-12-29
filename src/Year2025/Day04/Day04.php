@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Year2025\Day04;
 
 use App\AbstractPuzzle;
+use App\Constants\Directions;
 use App\Result;
 use Ds\Queue;
 
@@ -12,16 +13,6 @@ final class Day04 extends AbstractPuzzle
 {
     private const string ROLL_OF_PAPER = '@';
     private const int MAX_COUNT = 4;
-    private const array DIRECTIONS = [
-        'N' => [-1, 0],
-        'NE' => [-1, 1],
-        'E' => [0, 1],
-        'SE' => [1, 1],
-        'S' => [1, 0],
-        'SW' => [1, -1],
-        'W' => [0, -1],
-        'NW' => [-1, -1],
-    ];
 
     /** @var array<int, array<int, string>> */
     private array $map = [];
@@ -51,7 +42,7 @@ final class Day04 extends AbstractPuzzle
             $this->map[$i][$j] = '.';
             ++$part2;
 
-            foreach (self::DIRECTIONS as [$stepI, $stepJ]) {
+            foreach (Directions::ALL as [$stepI, $stepJ]) {
                 $i2 = $i + $stepI;
                 $j2 = $j + $stepJ;
                 if (self::ROLL_OF_PAPER === ($this->map[$i2][$j2] ?? null)) $queue->push([$i2, $j2]);
@@ -65,7 +56,7 @@ final class Day04 extends AbstractPuzzle
     {
         $count = 0;
 
-        foreach (self::DIRECTIONS as [$stepI, $stepJ]) {
+        foreach (Directions::ALL as [$stepI, $stepJ]) {
             $i2 = $i + $stepI;
             $j2 = $j + $stepJ;
             if (!isset($this->map[$i2][$j2])) continue;

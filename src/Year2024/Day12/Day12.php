@@ -5,18 +5,12 @@ declare(strict_types=1);
 namespace App\Year2024\Day12;
 
 use App\AbstractPuzzle;
+use App\Constants\Directions;
 use App\Result;
 use Ds\Queue;
 
 final class Day12 extends AbstractPuzzle
 {
-    private const array DIRECTIONS = [
-        'N' => [-1, 0],
-        'E' => [0, 1],
-        'S' => [1, 0],
-        'W' => [0, -1],
-    ];
-
     /** @var list<list<Block>> */
     private array $map = [];
 
@@ -62,7 +56,7 @@ final class Day12 extends AbstractPuzzle
             $block->treated = true;
             ++$area;
 
-            foreach (self::DIRECTIONS as $direction) {
+            foreach (Directions::CARDINALS as $direction) {
                 $i2 = $x + $direction[0];
                 $j2 = $y + $direction[1];
 
