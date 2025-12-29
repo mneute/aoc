@@ -20,9 +20,11 @@ final class Day18 extends AbstractPuzzle
     /** @var array<int, array<int, string>> */
     private array $map = [['#']];
 
-    /** @var array{0: int, 1: int} */
+    /** @var array{int, int} */
     private array $currentPosition = [0, 0];
+    private int $minI = 0;
     private int $maxI = 0;
+    private int $minJ = 0;
     private int $maxJ = 0;
 
     public function run(): Result
@@ -35,16 +37,12 @@ final class Day18 extends AbstractPuzzle
             $count = (int) $matches['count'];
             \assert(1 <= $count);
 
+            $pt1 += $count;
+
             $this->moveCursor($direction, $count);
         }
-
-        foreach ($this->map as $line) {
-            $str = implode('', $line);
-            $first = strpos($str, '#');
-            $last = strrpos($str, '#');
-
-            $pt1 += ($last - $first) + 1;
-        }
+        ksort($this->map);
+        $this->printMap();
 
         return new Result($pt1, $pt2);
     }
@@ -61,14 +59,31 @@ final class Day18 extends AbstractPuzzle
             if ($newI > $this->maxI) {
                 $this->map[$newI] = array_fill(0, $this->maxJ + 1, '.');
                 $this->maxI = $newI;
+            } elseif ($newI < $this->minI) {
+                $this->map[$newI] = array_fill(0, $this->maxJ + 1, '.');
+                $this->minI = $newI;
             }
             if ($newJ > $this->maxJ) {
-                foreach ($this->map as &$mapLine) $mapLine[$newJ] = '.';
+                foreach ($this->map as &$line) $line[$newJ] = '.';
                 $this->maxJ = $newJ;
+            } elseif ($newJ < $this->minJ) {
+                foreach ($this->map as &$line) $line[$newJ] = '.';
+                $this->minJ = $newJ;
             }
 
             $this->map[$newI][$newJ] = '#';
             $this->currentPosition = [$newI, $newJ];
         }
+    }
+
+    private function printMap(): void
+    {
+        foreach ($this->map as $line) {
+            foreach ($line as $char) {
+                echo $char;
+            }
+            echo PHP_EOL;
+        }
+        echo PHP_EOL;
     }
 }
