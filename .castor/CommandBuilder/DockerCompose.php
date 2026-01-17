@@ -11,6 +11,10 @@ final class DockerCompose implements CommandBuilderInterface
     private string $container = 'php';
     private bool $build = false;
     private bool $bash = false;
+
+    /**
+     * @var string[]
+     */
     private array $puzzle = [];
     private array $command = [];
 
