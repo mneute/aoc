@@ -19,22 +19,57 @@ final class Day07 extends AbstractPuzzle
         $start = min($positions);
         $end = max($positions);
 
-        $part1 = $part2 = \PHP_INT_MAX;
+        $part1 = $this->getLowestFuelConsumption(
+            fn (int $x): int => array_reduce($positions, fn (int $carry, int $pos): int => $carry + abs($x - $pos), 0),
+            $start,
+            $end
+        );
 
-        foreach (range($start, $end) as $meetingPoint) {
-            $score1 = $score2 = 0;
+        $part2 = $this->getLowestFuelConsumption(
+            fn (int $x): int => array_reduce($positions, function (int $carry, int $pos) use ($x): int {
+                $distance = abs($x - $pos);
 
-            foreach ($positions as $position) {
-                $distance = abs($meetingPoint - $position);
-
-                $score1 += $distance;
-                $score2 += (int) ($distance * ($distance + 1) / 2);
-            }
-
-            $part1 = min($score1, $part1);
-            $part2 = min($score2, $part2);
-        }
+                return $carry + (int) ($distance * ($distance + 1) / 2);
+            }, 0),
+            $start,
+            $end
+        );
 
         return new Result($part1, $part2);
+    }
+
+    /**
+     * @param callable(int): int $getFuelConsumption
+     */
+    private function getLowestFuelConsumption(callable $getFuelConsumption, int $start, int $end): int
+    {
+        \assert($start < $end);
+
+        /** @var array<int, int> $cache */
+        $cache = [];
+
+        do {
+            $m1 = (int) ($start + ($end - $start) / 3);
+            $m2 = (int) ($end - ($end - $start) / 3);
+
+            $cache[$m1] ??= $getFuelConsumption($m1);
+            $cache[$m2] ??= $getFuelConsumption($m2);
+
+            if ($cache[$m1] < $cache[$m2]) {
+                $end = $m2;
+            } else {
+                $start = $m1;
+            }
+        } while (2 < $end - $start);
+
+        $list = range($start, $end);
+        \assert([] !== $list);
+
+        return min(
+            array_map(
+                fn (int $x): int => $cache[$x],
+                $list
+            )
+        );
     }
 }
