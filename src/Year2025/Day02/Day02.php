@@ -11,14 +11,14 @@ final class Day02 extends AbstractPuzzle
 {
     public function run(): Result
     {
-        $content = str_replace(
-            "\n",
-            '',
-            file_get_contents($this->getFilePath()) ?: throw new \RuntimeException('Unreadable file')
-        );
+        $ranges = $this->getFilePath()
+            |> (fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unreadable file'))
+            |> (fn (string $content): string => str_replace("\n", '', $content))
+            |> (fn (string $content): array => explode(',', $content));
+
         $part1 = $part2 = 0;
 
-        foreach (explode(',', $content) as $range) {
+        foreach ($ranges as $range) {
             [$start, $end] = array_map(intval(...), explode('-', $range));
 
             for ($id = $start; $id <= $end; ++$id) {

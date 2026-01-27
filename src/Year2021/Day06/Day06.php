@@ -14,10 +14,10 @@ final class Day06 extends AbstractPuzzle
 
     public function run(): Result
     {
-        $fishList = array_map(intval(...), explode(
-            ',',
-            file_get_contents($this->getFilePath()) ?: throw new \RuntimeException('Unable to read file')
-        ));
+        $fishList = $this->getFilePath()
+            |> (fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unable to read file'))
+            |> (fn (string $content): array => explode(',', $content))
+            |> (fn (array $list): array => array_map(intval(...), $list));
 
         $part1 = $part2 = 0;
         foreach ($fishList as $fish) {

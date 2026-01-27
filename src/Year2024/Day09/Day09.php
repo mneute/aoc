@@ -14,10 +14,10 @@ final class Day09 extends AbstractPuzzle
     public function run(): Result
     {
         $part1 = $part2 = 0;
-        $diskMap = trim(
-            file_get_contents($this->getFilePath()) ?: throw new \RuntimeException(\sprintf("Unable to read file '%s'", $this->getFilePath())),
-            "\r\n"
-        );
+        $diskMap = $this->getFilePath()
+            |> (fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unable to read file'))
+            |> (fn (string $content): string => trim($content, "\r\n"))
+        ;
 
         $hardDrive = [];
         $nextFreeSpace = $lastID = null;

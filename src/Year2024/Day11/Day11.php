@@ -14,10 +14,10 @@ final class Day11 extends AbstractPuzzle
 
     public function run(): Result
     {
-        $fileContent = file_get_contents($this->getFilePath());
-        \assert(\is_string($fileContent));
-
-        $stones = array_map(intval(...), explode(' ', trim($fileContent)));
+        $stones = $this->getFilePath()
+            |> (fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unable to read file'))
+            |> (fn (string $content): array => explode(' ', $content))
+            |> (fn (array $list): array => array_map(intval(...), $list));
 
         $pt1 = $pt2 = 0;
 

@@ -65,11 +65,8 @@ final class Day07 extends AbstractPuzzle
         $list = range($start, $end);
         \assert([] !== $list);
 
-        return min(
-            array_map(
-                fn (int $x): int => $cache[$x],
-                $list
-            )
-        );
+        return $list
+            |> (fn (array $list): array => array_map(fn (int $x): int => $cache[$x], $list))
+            |> min(...);
     }
 }
