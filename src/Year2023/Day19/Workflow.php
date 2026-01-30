@@ -23,7 +23,7 @@ final readonly class Workflow
             $outcome = $matches['outcome'];
 
             if ('' === ($matches['letter'] ?? '')) {
-                $steps[] = fn (Part $part): string => $outcome;
+                $steps[] = static fn (Part $part): string => $outcome;
                 continue;
             }
 
@@ -34,9 +34,9 @@ final readonly class Workflow
             ] = $matches;
 
             if ('<' === $op) {
-                $steps[] = fn (Part $part): ?string => $part->{$letter} < $limit ? $outcome : null;
+                $steps[] = static fn (Part $part): ?string => $part->{$letter} < $limit ? $outcome : null;
             } else {
-                $steps[] = fn (Part $part): ?string => $part->{$letter} > $limit ? $outcome : null;
+                $steps[] = static fn (Part $part): ?string => $part->{$letter} > $limit ? $outcome : null;
             }
         }
         $this->steps = $steps;

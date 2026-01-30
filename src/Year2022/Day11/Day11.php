@@ -28,7 +28,7 @@ final class Day11 extends AbstractPuzzle
                 }
             }
         }
-        usort($monkeys, fn (Monkey $a, Monkey $b): int => $b->inspections <=> $a->inspections);
+        usort($monkeys, static fn (Monkey $a, Monkey $b): int => $b->inspections <=> $a->inspections);
 
         return new Result(
             $monkeys[0]->inspections * $monkeys[1]->inspections,

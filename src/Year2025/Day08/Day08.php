@@ -83,6 +83,6 @@ final class Day08 extends AbstractPuzzle
             }
         }
 
-        $this->circuits->sort(fn (Circuit $a, Circuit $b): int => $b->size() <=> $a->size());
+        $this->circuits->sort(static fn (Circuit $a, Circuit $b): int => $b->size() <=> $a->size());
     }
 }

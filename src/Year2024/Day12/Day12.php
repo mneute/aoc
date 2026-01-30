@@ -20,7 +20,7 @@ final class Day12 extends AbstractPuzzle
 
         foreach ($this->readFile() as $line) {
             $this->map[] = array_map(
-                fn (string $letter): Block => new Block($letter),
+                static fn (string $letter): Block => new Block($letter),
                 str_split($line),
             );
         }

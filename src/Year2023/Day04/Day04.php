@@ -46,7 +46,7 @@ final class Day04 extends AbstractPuzzle
 
         $pt2 = array_reduce(
             $cards,
-            fn (int $carry, Card $card): int => $carry + $card->getCount(),
+            static fn (int $carry, Card $card): int => $carry + $card->getCount(),
             0
         );
 

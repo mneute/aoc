@@ -29,14 +29,14 @@ final class Day05 extends AbstractPuzzle
             }
 
             $id = (int) $line;
-            if (array_any($this->ranges, fn (Range $range): bool => $range->contains($id))) ++$part1;
+            if (array_any($this->ranges, static fn (Range $range): bool => $range->contains($id))) ++$part1;
         }
 
         return new Result(
             $part1,
             array_reduce(
                 $this->ranges,
-                fn (int $carry, Range $range): int => $carry + $range->countElements(),
+                static fn (int $carry, Range $range): int => $carry + $range->countElements(),
                 0
             )
         );
@@ -46,7 +46,7 @@ final class Day05 extends AbstractPuzzle
     {
         $overlaps = array_filter(
             $this->ranges,
-            fn (Range $r): bool => $r->overlaps($range)
+            static fn (Range $r): bool => $r->overlaps($range)
         );
 
         if ([] === $overlaps) {
@@ -57,7 +57,7 @@ final class Day05 extends AbstractPuzzle
 
         $merged = array_reduce(
             $overlaps,
-            function (Range $carry, Range $current): Range {
+            static function (Range $carry, Range $current): Range {
                 \assert($carry->overlaps($current));
 
                 return $carry->merge($current);
@@ -65,7 +65,7 @@ final class Day05 extends AbstractPuzzle
             $range
         );
         foreach ($overlaps as $overlap) {
-            $key = array_find_key($this->ranges, fn (Range $r): bool => $r === $overlap);
+            $key = array_find_key($this->ranges, static fn (Range $r): bool => $r === $overlap);
             \assert(\is_int($key));
             unset($this->ranges[$key]);
         }

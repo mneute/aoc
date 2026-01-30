@@ -29,8 +29,8 @@ final class Day09 extends AbstractPuzzle
         }
 
         return new Result(
-            array_reduce($tail1Positions, fn (int $carry, array $array): int => $carry + \count($array), 0),
-            array_reduce($tail2Positions, fn (int $carry, array $array): int => $carry + \count($array), 0),
+            array_reduce($tail1Positions, static fn (int $carry, array $array): int => $carry + \count($array), 0),
+            array_reduce($tail2Positions, static fn (int $carry, array $array): int => $carry + \count($array), 0),
         );
     }
 }

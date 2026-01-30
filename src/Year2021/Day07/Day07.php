@@ -12,21 +12,21 @@ final class Day07 extends AbstractPuzzle
     public function run(): Result
     {
         $positions = $this->getFilePath()
-                |> (fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unable to read file'))
-                |> (fn (string $content): array => explode(',', $content))
-                |> (fn (array $list): array => array_map(intval(...), $list));
+                |> (static fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unable to read file'))
+                |> (static fn (string $content): array => explode(',', $content))
+                |> (static fn (array $list): array => array_map(intval(...), $list));
 
         $start = min($positions);
         $end = max($positions);
 
         $part1 = $this->getLowestFuelConsumption(
-            fn (int $x): int => array_reduce($positions, fn (int $carry, int $pos): int => $carry + abs($x - $pos), 0),
+            static fn (int $x): int => array_reduce($positions, static fn (int $carry, int $pos): int => $carry + abs($x - $pos), 0),
             $start,
             $end
         );
 
         $part2 = $this->getLowestFuelConsumption(
-            fn (int $x): int => array_reduce($positions, function (int $carry, int $pos) use ($x): int {
+            static fn (int $x): int => array_reduce($positions, static function (int $carry, int $pos) use ($x): int {
                 $distance = abs($x - $pos);
 
                 return $carry + (int) ($distance * ($distance + 1) / 2);
@@ -63,10 +63,9 @@ final class Day07 extends AbstractPuzzle
         } while (2 < $end - $start);
 
         $list = range($start, $end);
-        \assert([] !== $list);
 
         return $list
-            |> (fn (array $list): array => array_map(fn (int $x): int => $cache[$x], $list))
+            |> (static fn (array $list): array => array_map(static fn (int $x): int => $cache[$x], $list))
             |> min(...);
     }
 }

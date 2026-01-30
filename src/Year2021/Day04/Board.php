@@ -21,7 +21,7 @@ final class Board
     public function addElements(string $line): void
     {
         $this->elements[] = array_map(
-            fn (string $elt): Number => new Number((int) $elt),
+            static fn (string $elt): Number => new Number((int) $elt),
             str_split($line, 3)
         );
     }
@@ -51,9 +51,9 @@ final class Board
     {
         return array_reduce(
             $this->elements,
-            fn (int $lineCarry, array $line): int => $lineCarry + array_reduce(
+            static fn (int $lineCarry, array $line): int => $lineCarry + array_reduce(
                 $line,
-                fn (int $colCarry, Number $n): int => $colCarry + ($n->marked ? 0 : $n->value),
+                static fn (int $colCarry, Number $n): int => $colCarry + ($n->marked ? 0 : $n->value),
                 0
             ),
             0

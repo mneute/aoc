@@ -44,8 +44,8 @@ final class Directory
     {
         return $this->size ??= array_reduce(
             $this->files,
-            fn (int $carry, File $file): int => $carry + $file->size,
-            array_reduce($this->directories, fn (int $carry, self $dir): int => $carry + $dir->getSize(), 0)
+            static fn (int $carry, File $file): int => $carry + $file->size,
+            array_reduce($this->directories, static fn (int $carry, self $dir): int => $carry + $dir->getSize(), 0)
         );
     }
 }

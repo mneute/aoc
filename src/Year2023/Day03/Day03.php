@@ -53,7 +53,7 @@ final class Day03 extends AbstractPuzzle
 
                 $pt2 += array_reduce(
                     $numbers,
-                    fn (int $carry, int $number): int => $carry * $number,
+                    static fn (int $carry, int $number): int => $carry * $number,
                     1
                 );
             }

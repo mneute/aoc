@@ -12,9 +12,9 @@ final class Day02 extends AbstractPuzzle
     public function run(): Result
     {
         $ranges = $this->getFilePath()
-            |> (fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unreadable file'))
-            |> (fn (string $content): string => str_replace("\n", '', $content))
-            |> (fn (string $content): array => explode(',', $content));
+            |> (static fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unreadable file'))
+            |> (static fn (string $content): string => str_replace("\n", '', $content))
+            |> (static fn (string $content): array => explode(',', $content));
 
         $part1 = $part2 = 0;
 

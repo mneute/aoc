@@ -15,8 +15,8 @@ final class Day09 extends AbstractPuzzle
     {
         $part1 = $part2 = 0;
         $diskMap = $this->getFilePath()
-            |> (fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unable to read file'))
-            |> (fn (string $content): string => trim($content, "\r\n"))
+            |> (static fn (string $path): string => file_get_contents($path) ?: throw new \RuntimeException('Unable to read file'))
+            |> (static fn (string $content): string => trim($content, "\r\n"))
         ;
 
         $hardDrive = [];

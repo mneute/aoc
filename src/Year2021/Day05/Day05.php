@@ -79,9 +79,9 @@ final class Day05 extends AbstractPuzzle
     {
         return array_reduce(
             $grid,
-            fn (int $lineCarry, array $line): int => $lineCarry + array_reduce(
+            static fn (int $lineCarry, array $line): int => $lineCarry + array_reduce(
                 $line,
-                fn (int $colCarry, int $count): int => $colCarry + ($count >= 2 ? 1 : 0),
+                static fn (int $colCarry, int $count): int => $colCarry + ($count >= 2 ? 1 : 0),
                 0
             ),
             0

@@ -32,7 +32,7 @@ final class Day09 extends AbstractPuzzle
 
         $ecarts = $this->getEcarts($numbers);
 
-        if (array_all($ecarts, fn (int $ecart): bool => 0 === $ecart)) {
+        if (array_all($ecarts, static fn (int $ecart): bool => 0 === $ecart)) {
             return $numbers[$end];
         }
 
@@ -46,7 +46,7 @@ final class Day09 extends AbstractPuzzle
     {
         $ecarts = $this->getEcarts($numbers);
 
-        if (array_all($ecarts, fn (int $ecart): bool => 0 === $ecart)) {
+        if (array_all($ecarts, static fn (int $ecart): bool => 0 === $ecart)) {
             return $numbers[0];
         }
 

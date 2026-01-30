@@ -60,7 +60,7 @@ final class Day06 extends AbstractPuzzle
         $lines = file($this->getFilePath(), \FILE_IGNORE_NEW_LINES);
         $countLines = \count($lines);
         $lineLength = \strlen($lines[0]);
-        \assert(array_all($lines, fn (string $line): bool => \strlen($line) === $lineLength));
+        \assert(array_all($lines, static fn (string $line): bool => \strlen($line) === $lineLength));
 
         /** @var array<int, int> $numbers */
         $numbers = [];
