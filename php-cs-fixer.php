@@ -8,7 +8,7 @@ use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
 $finder = new Finder()
     ->in([__DIR__, __DIR__ . '/.castor'])
-    ->exclude(['vendor'])
+    ->exclude(['cache', 'vendor'])
     ->notPath(['.castor/.castor.stub.php']);
 
 return new Config()

@@ -96,7 +96,9 @@ final class DockerCompose implements CommandBuilderInterface
             ];
         } elseif ([] !== $this->command) {
             return [
-                ...$runCommand,
+                ...$command,
+                'exec',
+                $this->container,
                 ...$this->command,
             ];
         }
