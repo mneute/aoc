@@ -16,7 +16,7 @@ final class Day07 extends AbstractPuzzle
         $hands = [];
         foreach ($this->readFile() as $line) {
             preg_match('#^(?<hand>[AKQJT2-9]{5})\s+(?<bid>\d+)$#', $line, $matches);
-            \assert(\array_key_exists('hand', $matches) && \array_key_exists('bid', $matches));
+            \assert(\array_key_exists('hand', $matches));
 
             $hands[] = new Hand($matches['hand'], (int) $matches['bid']);
         }

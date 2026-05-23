@@ -17,10 +17,7 @@ final class Day04 extends AbstractPuzzle
 
         foreach ($this->readFile() as $line) {
             preg_match(self::REGEX, $line, $matches);
-            \assert(\array_key_exists('p11', $matches)
-                && \array_key_exists('p12', $matches)
-                && \array_key_exists('p21', $matches)
-                && \array_key_exists('p22', $matches));
+            \assert(\array_key_exists('p11', $matches));
 
             [
                 'p11' => $p1_1,

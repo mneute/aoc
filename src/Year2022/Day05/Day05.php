@@ -50,7 +50,7 @@ final class Day05 extends AbstractPuzzle
 
         foreach ($instructions as $instruction) {
             preg_match('#^move (?<count>\d+) from (?<source>\d+) to (?<dest>\d+)$#', $instruction, $matches);
-            \assert(\array_key_exists('count', $matches) && \array_key_exists('source', $matches) && \array_key_exists('dest', $matches));
+            \assert(\array_key_exists('count', $matches));
 
             ['count' => $count, 'source' => $source, 'dest' => $dest] = $matches;
 

@@ -18,7 +18,7 @@ final class Day01 extends AbstractPuzzle
 
         foreach ($this->readFile() as $line) {
             preg_match('#^([LR])(\d+)$#', $line, $matches);
-            \assert(\array_key_exists(1, $matches) && \array_key_exists(2, $matches));
+            \assert(\array_key_exists(1, $matches));
 
             $clicks = (int) $matches[2];
             $part2 += (int) ($clicks / self::MAX);

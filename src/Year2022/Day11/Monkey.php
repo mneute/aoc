@@ -21,21 +21,27 @@ final class Monkey
     public function __construct(string $definition)
     {
         preg_match('#Monkey (\d+)#', $definition, $matches);
+        \assert(isset($matches[1]));
         $this->id = (int) $matches[1];
 
         preg_match('#Starting items: (.+)#', $definition, $matches);
+        \assert(isset($matches[1]));
         $this->items = new Queue(array_map(intval(...), explode(', ', $matches[1])));
 
         preg_match('#Operation: new = (.+)#', $definition, $matches);
+        \assert(isset($matches[1]));
         $this->operation = $matches[1];
 
         preg_match('#Test: divisible by (\d+)#', $definition, $matches);
+        \assert(isset($matches[1]));
         $this->modulo = (int) $matches[1];
 
         preg_match('#If true: throw to monkey (\d+)#', $definition, $matches);
+        \assert(isset($matches[1]));
         $this->nextIfTrue = (int) $matches[1];
 
         preg_match('#If false: throw to monkey (\d+)#', $definition, $matches);
+        \assert(isset($matches[1]));
         $this->nextIfFalse = (int) $matches[1];
     }
 
